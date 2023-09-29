@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Singleton]
 public class Player : MonoBehaviour
@@ -11,7 +12,14 @@ public class Player : MonoBehaviour
     
     Center _center;
 
-    public Rigidbody Rigidbody { get; private set; }
+    Rigidbody _rigidbody;
+    
+    [SerializeField] GameObject _gun;
+    [SerializeField] float _gunRecoil = 10f;
+    [SerializeField] float _gunForce = 10f;
+    [SerializeField] Bullet _bulletPrefab;
+    [SerializeField] float _bulletScale = 0.5f;
+
 
     void Awake()
     {
@@ -21,17 +29,28 @@ public class Player : MonoBehaviour
     void Start()
     {
         _center = Center.Instance;
-        Rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
         var direction = _center.transform.position - transform.position;
         Debug.DrawRay(transform.position, direction, Color.red);
-        Rigidbody.AddForce(direction * _center.pullForce);
+        _rigidbody.AddForce(direction * _center.pullForce);
     }
 
-    void Update()
+    public void SetCannonDirection(Vector3 direction)
     {
+        transform.forward = direction;
+    }
+    
+    public void ShootCannon()
+    {
+        var bullet = Instantiate(_bulletPrefab, _gun.transform.position, Quaternion.identity);
+        bullet.transform.localScale = transform.lossyScale * _bulletScale;
+        bullet.transform.forward = transform.forward;
+        bullet.Rigidbody.AddForce(transform.forward * _gunForce, ForceMode.Impulse);
+        
+        _rigidbody.AddForce(-transform.forward * _gunRecoil, ForceMode.Impulse);
     }
 }

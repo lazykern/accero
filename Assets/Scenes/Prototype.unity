@@ -776,7 +776,7 @@ GameObject:
   - component: {fileID: 1074008027}
   - component: {fileID: 1074008026}
   m_Layer: 2
-  m_Name: Canon
+  m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1091,6 +1091,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7302e810df031064a89590146702fef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gun: {fileID: 1074008023}
+  _gunRecoil: 5
+  _gunForce: 2
+  _bulletPrefab: {fileID: 4223090643263721816, guid: 79eba776a6891df4c8f2aeb9d75c2ba6,
+    type: 3}
+  _bulletScale: 0.5
 --- !u!1 &1221791825
 GameObject:
   m_ObjectHideFlags: 0

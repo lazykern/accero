@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject _ground;
-    [SerializeField] float _cannonRecoil = 10f;
     Camera _camera;
 
     bool cannonDragging;
@@ -18,7 +17,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         UpdateCenterPosition();
-        UpdateCannonAngle();
+        UpdateCannonTurning();
         
         float pullForce = Center.Instance.pullForce + Input.mouseScrollDelta.y;
         Center.Instance.pullForce = Math.Clamp(pullForce, 0, 10);
@@ -38,7 +37,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void UpdateCannonAngle()
+    void UpdateCannonTurning()
     {
         if (Input.GetMouseButtonDown(2))
         {
@@ -48,16 +47,15 @@ public class PlayerController : MonoBehaviour
         
         if (cannonDragging)
         {
-            var delta = Input.mousePosition - cannonDraggingStartPosition;
-            var normalizedDelta = delta.normalized;
-            Debug.DrawRay(Player.Instance.transform.position, new Vector3(normalizedDelta.x, normalizedDelta.y, 0) * 10, Color.red);
-            Player.Instance.transform.forward = new Vector3(normalizedDelta.x, normalizedDelta.y, 0);
+            var dragDelta = Input.mousePosition - cannonDraggingStartPosition;
+            var direction = dragDelta.magnitude > 0 ? dragDelta.normalized : transform.forward;
+            Debug.DrawRay(Player.Instance.transform.position, new Vector3(direction.x, direction.y, 0) * 10, Color.red);
+            Player.Instance.SetCannonDirection(new Vector3(direction.x, direction.y, 0));
         }
 
         if (Input.GetMouseButtonUp(2))
         {
-            cannonDragging = false;
-            Player.Instance.Rigidbody.AddForce(-Player.Instance.transform.forward * _cannonRecoil, ForceMode.Impulse);
+            Player.Instance.ShootCannon();
         }
     }
 }
