@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 289894897}
   - component: {fileID: 289894896}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Bottom Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -493,10 +493,10 @@ Transform:
   m_Children:
   - {fileID: 1148529681}
   - {fileID: 1204869726}
-  - {fileID: 1801360590}
-  - {fileID: 1061314615}
   - {fileID: 1524083905}
   - {fileID: 289894895}
+  - {fileID: 1801360590}
+  - {fileID: 1061314615}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
 --- !u!114 &694020735
@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 1061314617}
   - component: {fileID: 1061314616}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 1148529686}
   - component: {fileID: 1148529685}
   m_Layer: 0
-  m_Name: Accero
+  m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1174,7 +1174,7 @@ GameObject:
   - component: {fileID: 1524083907}
   - component: {fileID: 1524083906}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Top Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1311,7 +1311,7 @@ GameObject:
   - component: {fileID: 1801360592}
   - component: {fileID: 1801360591}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Left Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
