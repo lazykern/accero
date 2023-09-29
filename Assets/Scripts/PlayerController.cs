@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(2))
         {
+            cannonDragging = false;
             Player.Instance.ShootCannon();
         }
     }
