@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 public class Center : MonoBehaviour
 {
     public static Center Instance { get; private set; }
+    
     [Range(0, 10)]
     public float pullForce = 5f;
 
