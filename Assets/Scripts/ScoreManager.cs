@@ -23,5 +23,6 @@ public class ScoreManager : MonoBehaviour
     public void ResetScore()
     {
         Score = 0;
+        Debug.Log($"Score: {Score}");
     }
 }
