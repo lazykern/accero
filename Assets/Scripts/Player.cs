@@ -15,8 +15,8 @@ public class Player : MonoBehaviour
     Rigidbody _rigidbody;
     
     [SerializeField] GameObject _gun;
-    [SerializeField] float _gunRecoil = 10f;
-    [SerializeField] float _gunForce = 10f;
+    [SerializeField] float _gunRecoil = 1f;
+    [SerializeField] float _gunForce = 2f;
     [SerializeField] Bullet _bulletPrefab;
     [SerializeField] float _bulletScale = 0.5f;
 
