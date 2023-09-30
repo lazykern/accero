@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject _ground;
     Camera _camera;
+    LineRenderer _lineRenderer;
 
     bool cannonDragging;
     Vector3 cannonDraggingStartPosition;
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _camera = Camera.main;
+        _lineRenderer = GetComponent<LineRenderer>();
     }
 
     void Update()
@@ -41,8 +43,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(2))
         {
-            cannonDraggingStartPosition = Input.mousePosition;
             cannonDragging = true;
+            _lineRenderer.enabled = true;
+            
+            cannonDraggingStartPosition = Input.mousePosition;
         }
         
         if (cannonDragging)
@@ -51,11 +55,16 @@ public class PlayerController : MonoBehaviour
             var direction = dragDelta.magnitude > 0 ? dragDelta.normalized : transform.forward;
             Debug.DrawRay(Player.Instance.transform.position, new Vector3(direction.x, direction.y, 0) * 10, Color.red);
             Player.Instance.SetCannonDirection(new Vector3(direction.x, direction.y, 0));
+            
+            _lineRenderer.SetPosition(0, Player.Instance.transform.position);
+            _lineRenderer.SetPosition(1, Player.Instance.transform.position + direction * 10);
         }
 
         if (Input.GetMouseButtonUp(2))
         {
             cannonDragging = false;
+            _lineRenderer.enabled = false;
+            
             Player.Instance.ShootCannon();
         }
     }
