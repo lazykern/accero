@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class VelocityEnemy : Enemy
 {
-    [SerializeField] float velocity = 5f;
+    [SerializeField] float _maxVelocity = 5f;
+    [SerializeField] float _acceleration = 5f;
     
-    private float _lossyVelocity;
-
     void Awake()
     {
         base.Awake();
@@ -16,13 +15,14 @@ public class VelocityEnemy : Enemy
     void Update()
     {
         base.Update();
-    }
-    
-    void FixedUpdate()
-    {
-        // Pull player if player is in range
+        
         var player = Player.Instance;
         var direction = player.transform.position - transform.position;
-        rb.velocity = direction.normalized * (velocity * GameManager.Instance.ScaleFactor());
+        rb.AddForce(direction.normalized * (_acceleration * GameManager.Instance.ScaleFactor()) , ForceMode.Acceleration);
+        
+        if (rb.velocity.magnitude > _maxVelocity * GameManager.Instance.ScaleFactor())
+        {
+            rb.velocity = rb.velocity.normalized * (_maxVelocity * GameManager.Instance.ScaleFactor());
+        }
     }
 }

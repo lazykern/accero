@@ -3,11 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
     internal int _hp = 1;
+
+    [SerializeField]
+    internal int _knockBackFromBullet = 20;
+    
+    [SerializeField]
+    internal int _knockBackFromPlayer = 10;
     
     Rigidbody _rigidbody;
     public Rigidbody rb
@@ -22,17 +29,18 @@ public class Enemy : MonoBehaviour
 
     internal void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Bullet"))
+        switch (other.gameObject.tag)
         {
-            _hp--;
-            Debug.Log($"HP: {_hp}");
+            case "Bullet":
+                _hp--;
+                rb.AddForce((other.transform.position - transform.position).normalized * _knockBackFromBullet * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
+                break;
+            case "Player":
+                rb.AddForce((transform.position - other.transform.position).normalized * _knockBackFromPlayer * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
+                break;
         }
     }
-
-    internal void OnCollisionEnter(Collision other)
-    {
-    }
-
+    
     internal void Update()
     {
         if (_hp <= 0)
