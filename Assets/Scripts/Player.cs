@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] Bullet _bulletPrefab;
     [SerializeField] float _bulletScale = 0.5f;
     
-    [SerializeField] float _enemyContactKnockbackForce = 10f;
+    [SerializeField] float _knockbackFromEnemy = 10f;
     
     public float gunCooldown
     {
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         {
             // Knock player back from enemy
             var direction = (transform.position - other.transform.position).normalized;
-            rb.AddForce(direction * _enemyContactKnockbackForce * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
+            rb.AddForce(direction * _knockbackFromEnemy * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
         }
     }
 
