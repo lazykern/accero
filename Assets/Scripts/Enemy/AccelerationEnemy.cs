@@ -6,14 +6,11 @@ using UnityEngine.Serialization;
 public class AccelerationEnemy : Enemy
 {
     
-    [SerializeField] float acceleration = 5f;
+    [SerializeField] float acceleration = 1f;
     
-    private float _lossyAcceleration;
-
     void Awake()
     {
         base.Awake();
-        _lossyAcceleration = acceleration * transform.lossyScale.x;
     }
     
     void Update()
@@ -26,7 +23,6 @@ public class AccelerationEnemy : Enemy
         // Pull player if player is in range
         var player = Player.Instance;
         var direction = player.transform.position - transform.position;
-        
-        rb.AddForce(direction.normalized * _lossyAcceleration, ForceMode.Acceleration);
+        rb.AddForce(direction.normalized * (acceleration * GameManager.Instance.ScaleFactor()) , ForceMode.Acceleration);
     }
 }

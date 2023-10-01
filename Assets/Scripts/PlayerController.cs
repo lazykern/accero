@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     bool _dragging;
     Vector3 _dragStartPosition;
     
+    
     void Start()
     {
         _camera = Camera.main;
@@ -19,10 +20,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         UpdateCenter();
-        UpdatePlayer();
+        UpdatePlayerGun();
         
-        float pullForce = Center.Instance.pullForce + Input.mouseScrollDelta.y;
-        Center.Instance.pullForce = Math.Clamp(pullForce, 0, 10);
+        float centripetalAcceleration = Center.Instance.centripetalAcceleration + Input.mouseScrollDelta.y;
+        Center.Instance.centripetalAcceleration = Math.Clamp(centripetalAcceleration, 0, 100);
+    }
+    
+    void FixedUpdate()
+    {
+        var direction = Center.Instance.transform.position - Player.Instance.transform.position;
+        Player.Instance.rb.AddForce((direction/GameManager.Instance.ScaleFactor()) * (Center.Instance.centripetalAcceleration * GameManager.Instance.ScaleFactor()) , ForceMode.Acceleration);
     }
 
     void UpdateCenter()
@@ -46,7 +53,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void UpdatePlayer()
+    void UpdatePlayerGun()
     {
         
         if (Input.GetMouseButtonDown(2))
@@ -62,11 +69,12 @@ public class PlayerController : MonoBehaviour
             var dragDelta = Input.mousePosition - _dragStartPosition;
             var dragDirection = dragDelta.normalized;
             
-            _lineRenderer.SetPosition(0, Player.Instance.transform.position);
-            _lineRenderer.SetPosition(1, Player.Instance.transform.position + dragDirection);
-            
             Player.Instance.transform.rotation = Quaternion.LookRotation(dragDirection);
-            // 
+
+            _lineRenderer.SetPosition(0, Player.Instance.transform.position);
+            _lineRenderer.SetPosition(1, Player.Instance.transform.position + dragDirection * (10 * GameManager.Instance.ScaleFactor()));
+            
+            _lineRenderer.startColor = !Player.Instance.IsInCooldown() ? Color.green : Color.red;
         }
 
         if (Input.GetMouseButtonUp(2))
@@ -74,7 +82,7 @@ public class PlayerController : MonoBehaviour
             _dragging = false;
             _lineRenderer.enabled = false;
             
-            Player.Instance.ShootCannon();
+            Player.Instance.TryShoot();
         }
     }
 }

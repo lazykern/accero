@@ -14,10 +14,20 @@ public class Player : MonoBehaviour
 
     public Rigidbody rb { get; private set; }
 
-    [SerializeField] float _gunRecoil = 1f;
-    [SerializeField] float _gunForce = 2f;
+    [SerializeField] float _gunKnockbackForce = 15f;
+    [SerializeField] float _gunForce = 100f;
+    [SerializeField] float _gunCooldown = 1f;
+
+    float _lastShootTime;
     [SerializeField] Bullet _bulletPrefab;
     [SerializeField] float _bulletScale = 0.5f;
+    
+    [SerializeField] float _enemyContactKnockbackForce = 10f;
+    
+    public float gunCooldown
+    {
+        get => _gunCooldown;
+    }
 
 
     void Awake()
@@ -29,6 +39,7 @@ public class Player : MonoBehaviour
     {
         _center = Center.Instance;
         rb = GetComponent<Rigidbody>();
+        _lastShootTime = -_gunCooldown;
     }
 
     void Update()
@@ -39,20 +50,44 @@ public class Player : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void OnCollisionEnter(Collision other)
     {
-        var direction = _center.transform.position - transform.position;
-        Debug.DrawRay(transform.position, direction, Color.red);
-        rb.AddForce(direction * _center.pullForce);
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            // Knock player back from enemy
+            var direction = (transform.position - other.transform.position).normalized;
+            rb.AddForce(direction * _enemyContactKnockbackForce * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
+        }
     }
 
-    public void ShootCannon()
+
+    public void TryShoot()
     {
+        if (IsInCooldown())
+        {
+            return;
+        }
+        Shoot();
+    }
+
+    void Shoot()
+    {
+        _lastShootTime = Time.time;
+        
         var bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
         bullet.transform.localScale = transform.lossyScale * _bulletScale;
         bullet.transform.forward = transform.forward;
-        bullet.Rigidbody.AddForce(transform.forward * _gunForce, ForceMode.Impulse);
+        bullet.Rigidbody.AddForce(transform.forward * (_gunForce * GameManager.Instance.ScaleFactor()), ForceMode.Impulse);
         
-        rb.AddForce(-transform.forward * _gunRecoil, ForceMode.Impulse);
+        rb.AddForce(-transform.forward * (_gunKnockbackForce * GameManager.Instance.ScaleFactor()), ForceMode.Impulse);
+    }
+    public bool IsInCooldown()
+    {
+        return Time.time - _lastShootTime < _gunCooldown;
+    }
+    
+    public bool CanShoot()
+    {
+        return !IsInCooldown();
     }
 }
