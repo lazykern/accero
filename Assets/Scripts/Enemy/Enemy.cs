@@ -29,6 +29,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    internal void OnCollisionEnter(Collision other)
+    {
+    }
+
     internal void Update()
     {
         if (_hp <= 0)
@@ -36,9 +40,9 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
         
-        if (transform.localPosition.y != 0)
+        if (transform.localPosition.z != 0)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
         }
     }
 }

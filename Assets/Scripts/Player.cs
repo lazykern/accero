@@ -33,9 +33,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (transform.localPosition.y != 0)
+        if (transform.localPosition.z != 0)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
         }
     }
 
@@ -46,11 +46,6 @@ public class Player : MonoBehaviour
         rb.AddForce(direction * _center.pullForce);
     }
 
-    public void SetCannonDirection(Vector3 direction)
-    {
-        transform.forward = direction;
-    }
-    
     public void ShootCannon()
     {
         var bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
