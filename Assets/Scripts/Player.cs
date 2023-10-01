@@ -10,25 +10,17 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
     
-    Center _center;
-
     public Rigidbody rb { get; private set; }
 
     [SerializeField] float _gunKnockbackForce = 15f;
     [SerializeField] float _gunForce = 100f;
     [SerializeField] float _gunCooldown = 1f;
-
-    float _lastShootTime;
     [SerializeField] Bullet _bulletPrefab;
     [SerializeField] float _bulletScale = 0.5f;
     
     [SerializeField] float _knockbackFromEnemy = 10f;
     
-    public float gunCooldown
-    {
-        get => _gunCooldown;
-    }
-
+    float _lastShootTime;
 
     void Awake()
     {
@@ -37,7 +29,6 @@ public class Player : MonoBehaviour
     
     void Start()
     {
-        _center = Center.Instance;
         rb = GetComponent<Rigidbody>();
         _lastShootTime = -_gunCooldown;
     }
