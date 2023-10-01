@@ -13,6 +13,6 @@ public class PointItem : MonoBehaviour
             return;
 
         ScoreManager.Instance.AddScore(_score);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
