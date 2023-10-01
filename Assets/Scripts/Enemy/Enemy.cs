@@ -11,10 +11,10 @@ public class Enemy : MonoBehaviour
     internal int _hp = 1;
 
     [SerializeField]
-    internal int _knockBackFromBullet = 20;
+    internal int _knockbackFromBullet = 20;
     
     [SerializeField]
-    internal int _knockBackFromPlayer = 10;
+    internal int _knockbackFromPlayer = 10;
     
     Rigidbody _rigidbody;
     public Rigidbody rb
@@ -33,10 +33,10 @@ public class Enemy : MonoBehaviour
         {
             case "Bullet":
                 _hp--;
-                rb.AddForce((other.transform.position - transform.position).normalized * _knockBackFromBullet * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
+                rb.AddForce((other.transform.position - transform.position).normalized * _knockbackFromBullet * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
                 break;
             case "Player":
-                rb.AddForce((transform.position - other.transform.position).normalized * _knockBackFromPlayer * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
+                rb.AddForce((transform.position - other.transform.position).normalized * _knockbackFromPlayer * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
                 break;
         }
     }
