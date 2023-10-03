@@ -10,8 +10,6 @@ public class Center : MonoBehaviour
 {
     public static Center Instance { get; private set; }
     
-    [Range(0f, 100f)]
-    public float centripetalAcceleration = 20f;
 
     Rigidbody _rigidbody;
     public new Rigidbody rigidbody
