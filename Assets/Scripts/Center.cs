@@ -9,13 +9,9 @@ using UnityEngine.Serialization;
 public class Center : MonoBehaviour
 {
     public static Center Instance { get; private set; }
-    
 
-    Rigidbody _rigidbody;
-    public new Rigidbody rigidbody
-    {
-        get => _rigidbody;
-    }
+
+    public new Rigidbody rb { get; private set; }
 
     void Awake()
     {
@@ -24,6 +20,6 @@ public class Center : MonoBehaviour
 
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 }

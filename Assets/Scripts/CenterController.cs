@@ -1,36 +1,38 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CenterController : MonoBehaviour
 {
-    [SerializeField] GameObject _ground;
+    [SerializeField] Joystick _joystick;
+    [SerializeField] float baseVelocity = 0.2f;
+    [SerializeField] float maxVelocity = 2f;
+    
+    Vector3 _velocity = Vector3.zero;
 
-    Camera _camera;
-    void Start()
+    void OnTriggerEnter(Collider other)
     {
-        _camera = Camera.main;
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Center.Instance.rb.velocity = Vector3.zero;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (_joystick.IsOnDrag)
+        {
+            _velocity = _joystick.Direction.normalized * Mathf.Lerp(baseVelocity, maxVelocity, _joystick.Direction.magnitude);
+        }
+        else
+        {
+            _velocity = Vector3.zero;
+        }
     }
 
     void Update()
     {
-        UpdateCenter();
-    }
-    
-    void UpdateCenter()
-    {
-        var ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-
-        if (!Physics.Raycast(ray, out var hit) || hit.collider.gameObject != _ground)
-            return;
-
-        Center.Instance.transform.position = Vector3.Lerp(Center.Instance.transform.position, hit.point, 0.1f);
-        
-        var direction = hit.point - Center.Instance.transform.position;
-            
-        if (direction.magnitude != 0 && direction != Vector3.zero)
-        {
-            Center.Instance.transform.rotation = Quaternion.Lerp(Center.Instance.transform.rotation, Quaternion.LookRotation(direction), 0.1f);
-        }
+        Center.Instance.rb.velocity = _velocity;
     }
 }
