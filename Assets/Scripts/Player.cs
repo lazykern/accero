@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     
     float _lastShootTime;
 
+    LineRenderer _lineRenderer;
+
     void Awake()
     {
         Instance = this;
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        _lineRenderer = GetComponent<LineRenderer>();
         _lastShootTime = -_gunCooldown;
     }
 
@@ -61,6 +64,20 @@ public class Player : MonoBehaviour
         Shoot();
     }
 
+    public void DisplayLine()
+    {
+        _lineRenderer.enabled = true;
+        _lineRenderer.SetPosition(0, Player.Instance.transform.position);
+        _lineRenderer.SetPosition(1, Player.Instance.transform.position + Player.Instance.transform.forward * (10 * GameManager.Instance.ScaleFactor()));
+        
+        _lineRenderer.startColor = CanShoot() ? Color.green : Color.red;
+    }
+
+    public void DisableLine()
+    {
+        _lineRenderer.enabled = false;
+    }
+
     void Shoot()
     {
         _lastShootTime = Time.time;
@@ -72,7 +89,8 @@ public class Player : MonoBehaviour
         
         rb.AddForce(-transform.forward * (_gunKnockbackForce * GameManager.Instance.ScaleFactor()), ForceMode.Impulse);
     }
-    public bool IsInCooldown()
+
+    bool IsInCooldown()
     {
         return Time.time - _lastShootTime < _gunCooldown;
     }

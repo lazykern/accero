@@ -8,7 +8,9 @@ using UnityEngine.Serialization;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    internal int _hp = 1;
+    internal int _maxHealth = 5;
+
+    internal int _health;
 
     [SerializeField]
     internal int _knockbackFromBullet = 20;
@@ -22,9 +24,20 @@ public class Enemy : MonoBehaviour
         get => _rigidbody;
     }
 
+    Renderer _renderer;
+
+    Color _color;
+
     internal void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    internal void Start()
+    {
+        _health = _maxHealth;
+        _renderer = GetComponent<Renderer>();
+        _color = _renderer.material.color;
     }
 
     internal void OnTriggerEnter(Collider other)
@@ -32,7 +45,8 @@ public class Enemy : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Bullet":
-                _hp--;
+                _health--;
+                UpdateFromHealth();
                 rb.AddForce((other.transform.position - transform.position).normalized * _knockbackFromBullet * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
                 break;
             case "Player":
@@ -43,14 +57,21 @@ public class Enemy : MonoBehaviour
     
     internal void Update()
     {
-        if (_hp <= 0)
-        {
-            Destroy(gameObject);
-        }
         
         if (transform.localPosition.z != 0)
         {
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
         }
+    }
+
+    internal void UpdateFromHealth()
+    {
+        if (_health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        
+        var material = _renderer.material;
+        material.color = Color.Lerp(_color, Color.black, 1 - ((float)_health / _maxHealth));
     }
 }

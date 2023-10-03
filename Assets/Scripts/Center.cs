@@ -10,18 +10,13 @@ public class Center : MonoBehaviour
 {
     public static Center Instance { get; private set; }
     
-    public float centripetalAcceleration = 1f;
+    [Range(0f, 100f)]
+    public float centripetalAcceleration = 20f;
 
     Rigidbody _rigidbody;
-    public Rigidbody rigidbody
+    public new Rigidbody rigidbody
     {
         get => _rigidbody;
-    }
-    
-    Transform _transform;
-    public Transform transform
-    {
-        get => _transform;
     }
 
     void Awake()
@@ -32,6 +27,5 @@ public class Center : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _transform = GetComponent<Transform>();
     }
 }

@@ -7,12 +7,12 @@ public class VelocityEnemy : Enemy
     [SerializeField] float _maxVelocity = 5f;
     [SerializeField] float _acceleration = 5f;
     
-    void Awake()
+    new void Awake()
     {
         base.Awake();
     }
     
-    void Update()
+    new void Update()
     {
         base.Update();
         

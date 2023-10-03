@@ -6,14 +6,14 @@ using UnityEngine.Serialization;
 public class AccelerationEnemy : Enemy
 {
     
-    [SerializeField] float acceleration = 1f;
+    [SerializeField] float acceleration = 5f;
     
-    void Awake()
+    new void Awake()
     {
         base.Awake();
     }
     
-    void Update()
+    new void Update()
     {
         base.Update();
     }
