@@ -1,15 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public Rigidbody Rigidbody { get; private set; }
-    
-    [SerializeField] float _destroyTime = 5f;
-    
+    [SerializeField]
+    float _destroyTime = 5f;
+
     float _instantiateTime;
+
+    public Rigidbody Rigidbody { get; private set; }
 
     void Awake()
     {

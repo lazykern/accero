@@ -1,36 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
     internal int _maxHealth = 5;
 
-    internal int _health;
-
     [SerializeField]
     internal int _knockbackFromBullet = 20;
-    
+
     [SerializeField]
     internal int _knockbackFromPlayer = 10;
-    
-    Rigidbody _rigidbody;
-    public Rigidbody rb
-    {
-        get => _rigidbody;
-    }
-
-    Renderer _renderer;
 
     Color _color;
 
+    internal int _health;
+
+    Renderer _renderer;
+
+    public Rigidbody rb { get; private set; }
+
     internal void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     internal void Start()
@@ -38,6 +29,15 @@ public class Enemy : MonoBehaviour
         _health = _maxHealth;
         _renderer = GetComponent<Renderer>();
         _color = _renderer.material.color;
+    }
+
+    internal void Update()
+    {
+
+        if (transform.localPosition.z != 0)
+        {
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
+        }
     }
 
     internal void OnTriggerEnter(Collider other)
@@ -54,15 +54,6 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
-    
-    internal void Update()
-    {
-        
-        if (transform.localPosition.z != 0)
-        {
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
-        }
-    }
 
     internal void UpdateFromHealth()
     {
@@ -70,8 +61,8 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
         var material = _renderer.material;
-        material.color = Color.Lerp(_color, Color.black, 1 - ((float)_health / _maxHealth));
+        material.color = Color.Lerp(_color, Color.black, 1 - (float)_health / _maxHealth);
     }
 }

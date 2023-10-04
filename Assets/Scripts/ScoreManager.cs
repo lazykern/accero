@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,8 +5,9 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
+
     public int Score { get; private set; }
-    
+
     void Awake()
     {
         Instance = this;
@@ -19,7 +18,7 @@ public class ScoreManager : MonoBehaviour
         Score += score;
         Debug.Log($"Score: {Score}");
     }
-    
+
     public void ResetScore()
     {
         Score = 0;

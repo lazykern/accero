@@ -1,22 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CenterController : MonoBehaviour
 {
-    [SerializeField] Joystick _joystick;
-    [SerializeField] float baseVelocity = 0.2f;
-    [SerializeField] float maxVelocity = 2f;
-    
+    [SerializeField]
+    Joystick _joystick;
+
+    [SerializeField]
+    float baseVelocity = 0.2f;
+
+    [SerializeField]
+    float maxVelocity = 2f;
+
     Vector3 _velocity = Vector3.zero;
 
-    void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            Center.Instance.rb.velocity = Vector3.zero;
-        }
+        Center.Instance.rb.velocity = _velocity;
     }
 
     void FixedUpdate()
@@ -31,8 +30,11 @@ public class CenterController : MonoBehaviour
         }
     }
 
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        Center.Instance.rb.velocity = _velocity;
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Center.Instance.rb.velocity = Vector3.zero;
+        }
     }
 }
