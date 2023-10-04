@@ -1,27 +1,25 @@
 using System;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [Singleton]
 public class Player : MonoBehaviour
 {
     [SerializeField]
     int power = 1;
-    
+
     [SerializeField]
     float gunPower = 1f;
-    
+
     [SerializeField]
     float gunPowerIncreaseFactor = 1.25f;
-    
+
     [SerializeField]
     int _bulletCount = 1;
-    
+
     [SerializeField]
     int _maxBulletCount = 5;
-    
+
     [SerializeField]
     float _gunKnockbackForce = 15f;
 
@@ -70,10 +68,10 @@ public class Player : MonoBehaviour
     {
         switch (other.gameObject.tag)
         {
-        case "Enemy":
-            var direction = (transform.position - other.transform.position).normalized;
-            rb.AddForce(direction * _knockbackFromEnemy * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
-            break;
+            case "Enemy":
+                var direction = (transform.position - other.transform.position).normalized;
+                rb.AddForce(direction * _knockbackFromEnemy * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
+                break;
         }
     }
 
@@ -81,11 +79,11 @@ public class Player : MonoBehaviour
     {
         switch (other.gameObject.tag)
         {
-         case "PowerItem": 
-             PowerUp();
-             break;
-         case "PointItem":
-             break;
+            case "PowerItem":
+                PowerUp();
+                break;
+            case "PointItem":
+                break;
         }
     }
 
@@ -122,22 +120,22 @@ public class Player : MonoBehaviour
         {
             var bullet = Instantiate(_bulletPrefab, transform.position + transform.forward * (0.5f * GameManager.Instance.ScaleFactor()), transform.rotation);
             bullet.power = gunPower;
-            bullet.transform.localScale = Vector3.one * (GameManager.Instance.ScaleFactor());
-            
+            bullet.transform.localScale = Vector3.one * GameManager.Instance.ScaleFactor();
+
             bullet.transform.forward = transform.forward;
 
             if (i % 2 != 0)
             {
                 degree += 2.5f;
             }
-            
+
             if (i > 0)
             {
                 bullet.transform.forward = Quaternion.AngleAxis((float)(degree * Math.Pow(-1, i)), bullet.transform.right) * bullet.transform.forward;
             }
             bullet.Rigidbody.AddForce(bullet.transform.forward * (_gunForce * GameManager.Instance.ScaleFactor()), ForceMode.Impulse);
         }
-        
+
         rb.AddForce(-transform.forward * (_gunKnockbackForce * GameManager.Instance.ScaleFactor()), ForceMode.Impulse);
     }
 
@@ -145,7 +143,7 @@ public class Player : MonoBehaviour
     {
         power += 1;
         gunPower *= gunPowerIncreaseFactor;
-        
+
         if (power % 5 == 0 && _bulletCount < _maxBulletCount)
         {
             _bulletCount += 1;

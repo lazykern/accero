@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     [SerializeField]
     Joystick _joystick;
 
@@ -17,20 +16,18 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerGun()
     {
-        if (_joystick.Direction.magnitude > 0 && !_dragging)
+        if (_joystick.Direction.magnitude > 0.1 && !_dragging)
         {
             _dragging = true;
         }
 
-        if (_joystick.Direction.magnitude > 0 && _dragging)
+        if (_joystick.Direction.magnitude > 0.1 && _dragging)
         {
-            var dragDirection = _joystick.Direction.magnitude == 0
-                ? new Vector2(transform.right.x, transform.right.y)
-                : _joystick.Direction;
-            Player.Instance.transform.rotation = Quaternion.LookRotation(dragDirection);
+
             Player.Instance.DisplayLine();
+            Player.Instance.transform.rotation = Quaternion.LookRotation(_joystick.Direction);
         }
-        
+
         if (_joystick.Direction.magnitude != 0 || !_dragging)
             return;
 

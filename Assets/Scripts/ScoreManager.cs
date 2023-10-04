@@ -1,9 +1,13 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 [Singleton]
 public class ScoreManager : MonoBehaviour
 {
+    [SerializeField]
+    TextMeshPro _scoreText;
+
     public static ScoreManager Instance { get; private set; }
 
     public int Score { get; private set; }
@@ -16,12 +20,17 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int score)
     {
         Score += score;
-        Debug.Log($"Score: {Score}");
+        UpdateScoreText();
     }
 
     public void ResetScore()
     {
         Score = 0;
-        Debug.Log($"Score: {Score}");
+        UpdateScoreText();
+    }
+
+    void UpdateScoreText()
+    {
+        _scoreText.text = "SCORE " + Score;
     }
 }

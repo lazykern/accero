@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class AcceroController : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class AcceroController : MonoBehaviour
 
     [SerializeField]
     Joystick _joystick;
-    
+
     [SerializeField]
     LineRenderer _acceroLine;
 
@@ -32,7 +31,7 @@ public class AcceroController : MonoBehaviour
             _acceroLine.enabled = false;
             return;
         }
-        
+
         _acceroLine.enabled = true;
         UpdateAcceroLine();
 
@@ -55,7 +54,7 @@ public class AcceroController : MonoBehaviour
 
         Player.Instance.rb.AddForce(force, ForceMode.Acceleration);
     }
-    
+
     void UpdateAcceroLine()
     {
         _acceroLine.SetPosition(0, Center.Instance.transform.position);

@@ -68,6 +68,6 @@ public class Enemy : MonoBehaviour
         }
 
         var material = _renderer.material;
-        material.color = Color.Lerp(_color, Color.black, 1 - (float)_health / _maxHealth);
+        material.color = Color.Lerp(_color, Color.black, 1 - _health / _maxHealth);
     }
 }
