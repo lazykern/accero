@@ -39,6 +39,11 @@ public class AcceroController : MonoBehaviour
         centripetalAcceleration = joystickPercent < 0.5f
             ? Mathf.Lerp(_minCentripetalAcceleration, _initialCentripetalAcceleration, joystickPercent / 0.5f)
             : Mathf.Lerp(_initialCentripetalAcceleration, _maxCentripetalAcceleration, (joystickPercent - 0.5f) * 2);
+        
+        float centripetalAccelerationPercent = (centripetalAcceleration - _minCentripetalAcceleration) / (_maxCentripetalAcceleration - _minCentripetalAcceleration);
+        
+        _acceroLine.startColor = Color.Lerp(Color.white, Color.red, centripetalAccelerationPercent);
+        _acceroLine.endColor = Color.Lerp(Color.white, Color.red, centripetalAccelerationPercent);
     }
 
     void FixedUpdate()
