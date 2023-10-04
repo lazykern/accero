@@ -16,4 +16,9 @@ public class PointItem : MonoBehaviour
         ScoreManager.Instance.AddScore(_score);
         Destroy(gameObject);
     }
+
+    public void OnPickup()
+    {
+        throw new System.NotImplementedException();
+    }
 }

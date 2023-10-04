@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3811607137958111609}
   - component: {fileID: 4849592976880872542}
-  - component: {fileID: 6676681914571399646}
+  - component: {fileID: 631147438267928418}
   m_Layer: 2
   m_Name: Power Item
-  m_TagString: Untagged
+  m_TagString: PowerItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6676681914571399646
+--- !u!114 &631147438267928418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3776231779011579734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc187cb97f2565a4280217065f62741b, type: 3}
+  m_Script: {fileID: 11500000, guid: cdb28c5d41ab445b812d09b9fcae4cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _score: 1

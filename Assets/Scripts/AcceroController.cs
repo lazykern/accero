@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AcceroController : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class AcceroController : MonoBehaviour
 
     [SerializeField]
     Joystick _joystick;
+    
+    [SerializeField]
+    LineRenderer _acceroLine;
 
     float centripetalAcceleration;
 
@@ -25,8 +29,12 @@ public class AcceroController : MonoBehaviour
     {
         if (!_joystick.IsOnTouch)
         {
+            _acceroLine.enabled = false;
             return;
         }
+        
+        _acceroLine.enabled = true;
+        UpdateAcceroLine();
 
         float joystickPercent = (_joystick.Vertical + _joystick.HandleRange) / (2 * _joystick.HandleRange);
         centripetalAcceleration = joystickPercent < 0.5f
@@ -46,5 +54,11 @@ public class AcceroController : MonoBehaviour
         var force = direction * (centripetalAcceleration * GameManager.Instance.ScaleFactor());
 
         Player.Instance.rb.AddForce(force, ForceMode.Acceleration);
+    }
+    
+    void UpdateAcceroLine()
+    {
+        _acceroLine.SetPosition(0, Center.Instance.transform.position);
+        _acceroLine.SetPosition(1, Player.Instance.transform.position);
     }
 }

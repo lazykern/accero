@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    LineRenderer _centerLine;
 
     [SerializeField]
     Joystick _joystick;
@@ -15,7 +13,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         UpdatePlayerGun();
-        UpdateCenterLine();
     }
 
     void UpdatePlayerGun()
@@ -25,39 +22,20 @@ public class PlayerController : MonoBehaviour
             _dragging = true;
         }
 
-        switch (_joystick.Direction.magnitude)
+        if (_joystick.Direction.magnitude > 0 && _dragging)
         {
-            case > 0 when _dragging:
-            {
-                var dragDirection = _joystick.Direction;
-
-                Player.Instance.transform.rotation = Quaternion.LookRotation(dragDirection);
-                Player.Instance.DisplayLine();
-                break;
-            }
-            case 0 when _dragging:
-                _dragging = false;
-                Player.Instance.DisableLine();
-
-                Player.Instance.TryShoot();
-                break;
+            var dragDirection = _joystick.Direction.magnitude == 0
+                ? new Vector2(transform.right.x, transform.right.y)
+                : _joystick.Direction;
+            Player.Instance.transform.rotation = Quaternion.LookRotation(dragDirection);
+            Player.Instance.DisplayLine();
         }
-    }
+        
+        if (_joystick.Direction.magnitude != 0 || !_dragging)
+            return;
 
-
-    void UpdateCenterLine()
-    {
-        _centerLine.SetPosition(0, Center.Instance.transform.position);
-        _centerLine.SetPosition(1, Player.Instance.transform.position);
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            _centerLine.enabled = true;
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            _centerLine.enabled = false;
-        }
+        Player.Instance.TryShoot();
+        Player.Instance.DisableLine();
+        _dragging = false;
     }
 }

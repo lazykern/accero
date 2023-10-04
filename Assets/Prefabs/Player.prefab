@@ -97,12 +97,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7302e810df031064a89590146702fef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  power: 1
+  powerIncreaseFactor: 1.25
+  _bulletCount: 1
   _gunKnockbackForce: 15
   _gunForce: 100
   _gunCooldown: 1
   _bulletPrefab: {fileID: 4223090643263721816, guid: 79eba776a6891df4c8f2aeb9d75c2ba6,
     type: 3}
-  _bulletScale: 0.5
   _knockbackFromEnemy: 10
 --- !u!120 &8685960549955077354
 LineRenderer:

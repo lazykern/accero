@@ -4,6 +4,8 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField]
     float _destroyTime = 5f;
+    
+    [SerializeField] public float power = 1f;
 
     float _instantiateTime;
 

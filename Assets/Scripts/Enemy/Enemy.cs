@@ -3,35 +3,35 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    internal int _maxHealth = 5;
+    protected float _maxHealth = 5;
 
     [SerializeField]
-    internal int _knockbackFromBullet = 20;
+    protected int _knockbackFromBullet = 20;
 
     [SerializeField]
-    internal int _knockbackFromPlayer = 10;
+    protected int _knockbackFromPlayer = 10;
 
     Color _color;
 
-    internal int _health;
+    float _health;
 
     Renderer _renderer;
 
-    public Rigidbody rb { get; private set; }
+    protected Rigidbody rb { get; private set; }
 
-    internal void Awake()
+    protected void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    internal void Start()
+    protected void Start()
     {
         _health = _maxHealth;
         _renderer = GetComponent<Renderer>();
         _color = _renderer.material.color;
     }
 
-    internal void Update()
+    protected void Update()
     {
 
         if (transform.localPosition.z != 0)
@@ -45,8 +45,7 @@ public class Enemy : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Bullet":
-                _health--;
-                UpdateFromHealth();
+                Hit(other.GetComponent<Bullet>().power);
                 rb.AddForce((other.transform.position - transform.position).normalized * _knockbackFromBullet * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
                 break;
             case "Player":
@@ -55,7 +54,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    internal void UpdateFromHealth()
+    void Hit(float damage)
+    {
+        _health -= damage;
+        UpdateFromHealth();
+    }
+
+    void UpdateFromHealth()
     {
         if (_health <= 0)
         {
