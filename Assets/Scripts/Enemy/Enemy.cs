@@ -41,13 +41,14 @@ public class Enemy : MonoBehaviour
         {
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
         }
+
+        _renderer.material.color = Color.Lerp(Color.black, _color, _health / _maxHealth);
     }
     
     protected internal void SetInitializedHealth(float health)
     {
         _maxHealth = health;
         _health = health;
-        UpdateFromHealth();
     }
 
     internal void OnTriggerEnter(Collider other)
@@ -68,18 +69,16 @@ public class Enemy : MonoBehaviour
     void Hit(float damage)
     {
         _health -= damage;
-        UpdateFromHealth();
-    }
-
-    void UpdateFromHealth()
-    {
+        
         if (_health <= 0)
         {
+            Die();
+        }
+    }
+
+    void Die()
+    {
             _collider.enabled = false;
             EnemyManager.Instance.Kill(this);
-            return;
-        }
-
-        // _renderer.material.color = Color.Lerp(Color.black, _color, _health / _maxHealth);
     }
 }
