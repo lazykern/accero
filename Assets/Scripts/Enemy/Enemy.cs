@@ -82,3 +82,9 @@ public class Enemy : MonoBehaviour
             EnemyManager.Instance.Kill(this);
     }
 }
+
+public enum EnemyType
+{
+    Acceleration,
+    Velocity,
+}

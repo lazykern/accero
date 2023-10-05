@@ -538,16 +538,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7562beadd0a3c174a96e25fc2e46062b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 7
+  maxEnemies: 5
+  SpawnInterval: 10
   baseHealth: 2
-  healthMultiplier: 1.1
+  healthMultiplier: 1.25
   healthIncreaseInterval: 20
   accelerationEnemyPrefab: {fileID: 4469829534477808325, guid: 8f2f1a62c07f43f4789d66ec86771003,
     type: 3}
   velocityEnemyPrefab: {fileID: 5807072784395619729, guid: 744d3ea4d9d1c8041a5eb6b65f63c908,
     type: 3}
-  maxEnemies: 5
-  enemySpawnBar: {fileID: 1337112396}
   accelerationEnemyDestroyLocation: {fileID: 1804222826}
   velocityEnemyDestroyLocation: {fileID: 897294949}
 --- !u!1 &422218013
@@ -2171,6 +2170,7 @@ GameObject:
   - component: {fileID: 1337112395}
   - component: {fileID: 1337112397}
   - component: {fileID: 1337112396}
+  - component: {fileID: 1337112398}
   m_Layer: 5
   m_Name: Enemy Spawn Indicator
   m_TagString: Untagged
@@ -2236,6 +2236,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337112394}
   m_CullTransparentMesh: 1
+--- !u!114 &1337112398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337112394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c2ada63b958eb4b90d7e31b701364f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accelerationEnemySprite: {fileID: 5781808917954533657, guid: f24474d454869114b91db55d900f9f31,
+    type: 3}
+  velocityEnemySprite: {fileID: 7845928111315986146, guid: ad1761498052fe841945da4ca2f8f12e,
+    type: 3}
 --- !u!1 &1399562987
 GameObject:
   m_ObjectHideFlags: 0

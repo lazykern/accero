@@ -1,3 +1,4 @@
+using System;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,30 +9,30 @@ using Random = UnityEngine.Random;
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
-    
-    [SerializeField] float spawnInterval = 10f;
-    
+
+    [SerializeField] int maxEnemies = 5;
+    [SerializeField] public float SpawnInterval = 10f;
     [SerializeField] float baseHealth = 2f;
-    [SerializeField] float healthMultiplier = 1.1f;
+    [SerializeField] float healthMultiplier = 1.25f;
     [SerializeField] float healthIncreaseInterval = 20f;
     
     [SerializeField] AccelerationEnemy accelerationEnemyPrefab;
     [SerializeField] VelocityEnemy velocityEnemyPrefab;
     
-    [SerializeField] int maxEnemies = 5;
-
-    [SerializeField]
-    Image enemySpawnBar;
     
     [SerializeField] Transform accelerationEnemyDestroyLocation;
     [SerializeField] Transform velocityEnemyDestroyLocation;
-    
-    
-    float _spawnTimer;
-    float _healthIncreaseTimer;
+
+
+    public float SpawnTimer { get; private set; }
+
+    public float HealthIncreaseTimer { get; private set; }
+
+    public EnemyType NextEnemyType { get; private set; }
 
     protected internal int AccelerationEnemyKillCount;
     protected internal int VelocityEnemyKillCount;
+    
 
     void Awake()
     {
@@ -40,38 +41,42 @@ public class EnemyManager : MonoBehaviour
     
     void Start()
     {
-        _spawnTimer = spawnInterval;
-        _healthIncreaseTimer = healthIncreaseInterval;
+        SpawnTimer = SpawnInterval;
+        HealthIncreaseTimer = healthIncreaseInterval;
+        NextEnemyType = RandomEnemyType();
     }
     
     void FixedUpdate()
     {
-        _spawnTimer -= Time.fixedDeltaTime;
-        _healthIncreaseTimer -= Time.fixedDeltaTime;
+        SpawnTimer -= Time.fixedDeltaTime;
+        HealthIncreaseTimer -= Time.fixedDeltaTime;
         
-        if (_spawnTimer <= 0 && transform.childCount < maxEnemies)
+        if (SpawnTimer <= 0 && transform.childCount < maxEnemies)
         {
-            _spawnTimer = spawnInterval;
+            SpawnTimer = SpawnInterval;
             SpawnEnemy();
         }
 
-        if (!(_healthIncreaseTimer <= 0))
+        if (!(HealthIncreaseTimer <= 0))
             return;
 
-        _healthIncreaseTimer = healthIncreaseInterval;
+        HealthIncreaseTimer = healthIncreaseInterval;
         baseHealth *= healthMultiplier;
     }
 
-    void Update()
+    static EnemyType RandomEnemyType()
     {
-        enemySpawnBar.fillAmount = 1 - _spawnTimer / spawnInterval;
+        return Random.Range(0f,1f) < 0.5f ? EnemyType.Acceleration : EnemyType.Velocity;
     }
 
     void SpawnEnemy()
     {
-        Enemy enemy = Random.value > 0.5f ? Instantiate(accelerationEnemyPrefab, transform) : Instantiate(velocityEnemyPrefab, transform);
+        Enemy enemy = NextEnemyType == EnemyType.Acceleration ? Instantiate(accelerationEnemyPrefab, transform) : Instantiate(velocityEnemyPrefab, transform);
+        
         enemy.SetInitializedHealth(baseHealth);
         enemy.transform.localPosition = Vector3.zero;
+        
+        NextEnemyType = RandomEnemyType();
     }
     
     protected internal void Kill(Enemy enemy)
