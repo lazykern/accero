@@ -18,6 +18,8 @@ public class VelocityEnemy : Enemy
         base.Update();
 
         var player = Player.Instance;
+        if (player == null)
+            return;
         var direction = player.transform.position - transform.position;
         rb.AddForce(direction.normalized * (_acceleration * GameManager.Instance.ScaleFactor()), ForceMode.Acceleration);
 

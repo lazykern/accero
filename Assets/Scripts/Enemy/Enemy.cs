@@ -22,12 +22,12 @@ public class Enemy : MonoBehaviour
     protected void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        _renderer = GetComponent<Renderer>();
     }
 
     protected void Start()
     {
         _health = _maxHealth;
-        _renderer = GetComponent<Renderer>();
         _color = _renderer.material.color;
     }
 
@@ -38,6 +38,13 @@ public class Enemy : MonoBehaviour
         {
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
         }
+    }
+    
+    protected internal void SetInitializedHealth(float health)
+    {
+        _maxHealth = health;
+        _health = health;
+        UpdateFromHealth();
     }
 
     internal void OnTriggerEnter(Collider other)
@@ -64,10 +71,10 @@ public class Enemy : MonoBehaviour
     {
         if (_health <= 0)
         {
-            Destroy(gameObject);
+            EnemyManager.Kill(this);
+            return;
         }
 
-        var material = _renderer.material;
-        material.color = Color.Lerp(_color, Color.black, 1 - _health / _maxHealth);
+        // _renderer.material.color = Color.Lerp(Color.black, _color, _health / _maxHealth);
     }
 }

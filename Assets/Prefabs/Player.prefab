@@ -98,14 +98,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 1
-  powerIncreaseFactor: 1.25
+  gunPower: 1
+  gunPowerIncreaseFactor: 1.25
   _bulletCount: 1
+  _maxBulletCount: 5
   _gunKnockbackForce: 15
   _gunForce: 100
   _gunCooldown: 1
   _bulletPrefab: {fileID: 4223090643263721816, guid: 79eba776a6891df4c8f2aeb9d75c2ba6,
     type: 3}
-  _knockbackFromEnemy: 10
 --- !u!120 &8685960549955077354
 LineRenderer:
   serializedVersion: 2
@@ -230,7 +231,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d9f1014ce5e385c41a74aa959a2f6670,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9f1014ce5e385c41a74aa959a2f6670,
         type: 3}
@@ -290,6 +291,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 71363370848803386}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d9f1014ce5e385c41a74aa959a2f6670,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7923296364677135930}
   m_SourcePrefab: {fileID: 100100000, guid: d9f1014ce5e385c41a74aa959a2f6670, type: 3}
 --- !u!23 &4961696464590035631 stripped
 MeshRenderer:
@@ -323,8 +328,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fadeSpeed: 1
   _fadeAt: 5
-  _minimumAlpha: 0.25
+  _minimumAlpha: 0.1
   _meshRenderer: {fileID: 4961696464590035631}
+--- !u!95 &7923296364677135930
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6778494983823371411}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d409a52375b21e140a03455d3272463d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7591366561641522011
 PrefabInstance:
   m_ObjectHideFlags: 0

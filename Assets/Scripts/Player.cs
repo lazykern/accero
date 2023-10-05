@@ -32,10 +32,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     Bullet _bulletPrefab;
 
-    [SerializeField]
-    float _knockbackFromEnemy = 10f;
-
-
     float _lastShootTime;
 
     LineRenderer _lineRenderer;
@@ -68,9 +64,12 @@ public class Player : MonoBehaviour
     {
         switch (other.gameObject.tag)
         {
+            case "Wall": // bounce
+                var direction = Vector3.Reflect(rb.velocity.normalized, other.contacts[0].normal);
+                rb.velocity = direction * rb.velocity.magnitude;
+                break;
             case "Enemy":
-                var direction = (transform.position - other.transform.position).normalized;
-                rb.AddForce(direction * _knockbackFromEnemy * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
+                Player.Instance.rb.useGravity = true;
                 break;
         }
     }
@@ -144,7 +143,7 @@ public class Player : MonoBehaviour
         power += 1;
         gunPower *= gunPowerIncreaseFactor;
 
-        if (power % 5 == 0 && _bulletCount < _maxBulletCount)
+        if (power % 10 == 0 && _bulletCount < _maxBulletCount)
         {
             _bulletCount += 1;
         }

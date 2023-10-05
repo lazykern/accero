@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e4aa03fe8aa557541abaf64704cf8d2c, type: 2}
+  - {fileID: 2100000, guid: f6ad1c39f9bfc0e4089793c1f98bd530, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,4 +149,5 @@ MonoBehaviour:
   _maxHealth: 5
   _knockbackFromBullet: 20
   _knockbackFromPlayer: 10
+  health: 0
   acceleration: 5
