@@ -1,12 +1,13 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Singleton]
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField]
-    TextMeshPro _scoreText;
+    TextMeshProUGUI _scoreText;
 
     public static ScoreManager Instance { get; private set; }
 

@@ -53,7 +53,7 @@ public class AcceroController : MonoBehaviour
             return;
         }
 
-        var delta = Center.Instance.transform.position - Player.Instance.transform.position;
+        var delta = transform.position - Player.Instance.transform.position;
         var direction = delta.normalized;
         var force = direction * (centripetalAcceleration * GameManager.Instance.ScaleFactor());
 
@@ -62,7 +62,7 @@ public class AcceroController : MonoBehaviour
 
     void UpdateAcceroLine()
     {
-        _acceroLine.SetPosition(0, Center.Instance.transform.position);
+        _acceroLine.SetPosition(0, transform.position);
         _acceroLine.SetPosition(1, Player.Instance.transform.position);
     }
 }
