@@ -89,4 +89,9 @@ public class ItemManager : MonoBehaviour
         var powerItem = Instantiate(powerItemPrefab, transform);
         powerItem.transform.position = GetSpawnPosition();
     }
+    
+    protected internal static void Collect(Item item)
+    {
+        Destroy(item.gameObject);
+    }
 }

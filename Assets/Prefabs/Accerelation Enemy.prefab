@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5208811129241494934}
   - component: {fileID: 5726513395387243128}
   - component: {fileID: 4469829534477808325}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Accerelation Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -149,5 +149,4 @@ MonoBehaviour:
   _maxHealth: 5
   _knockbackFromBullet: 20
   _knockbackFromPlayer: 10
-  health: 0
   acceleration: 5

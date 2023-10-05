@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1756493565336593411}
   - component: {fileID: 567181752706323125}
   - component: {fileID: 1680623792585342266}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Point Item
   m_TagString: PointItem
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5932975680301888441}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 15, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

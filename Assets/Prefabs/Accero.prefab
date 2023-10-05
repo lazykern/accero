@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 5430009842277218663}
   - component: {fileID: 5384766162585909692}
   - component: {fileID: 7294256240673469018}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Accero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,8 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxCentripetalAcceleration: 100
-  _minCentripetalAcceleration: 0.1
-  _initialCentripetalAcceleration: 20
+  _minCentripetalAcceleration: -50
+  _initialCentripetalAcceleration: 25
   _joystick: {fileID: 0}
   _acceroLine: {fileID: 1344942592792932602}
 --- !u!1 &7723330690485958919
@@ -212,7 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5705932862673072117}
   - component: {fileID: 1344942592792932602}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Accero Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
