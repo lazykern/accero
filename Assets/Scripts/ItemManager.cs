@@ -22,7 +22,11 @@ public class ItemManager : MonoBehaviour
     [SerializeField]
     float spawnInterval = 10f;
     
+    [SerializeField]
+    float powerItemInterval = 25f;
+    
     float _spawnTimer;
+    float _powerItemTimer;
 
     void Awake()
     {
@@ -37,31 +41,52 @@ public class ItemManager : MonoBehaviour
     void FixedUpdate()
     {
         _spawnTimer -= Time.fixedDeltaTime;
+        _powerItemTimer -= Time.fixedDeltaTime;
 
         if (!(_spawnTimer <= 0) || transform.childCount >= maxItems)
             return;
-
+        
         _spawnTimer = spawnInterval;
-        SpawnItem();
+        
+        if (_powerItemTimer <= 0)
+        {
+            _powerItemTimer = powerItemInterval;
+            SpawnPowerItem();
+        }
+        else
+        {
+            SpawnPointItem();
+        }
     }
 
-    void SpawnItem()
+    Vector3 GetSpawnPosition()
     {
         var spawnPosition = new Vector2(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y));
-        
-        if (excludeArea.OverlapPoint(spawnPosition))
+
+        if (!excludeArea.OverlapPoint(spawnPosition))
+            return new Vector3(spawnPosition.x, spawnPosition.y, transform.position.z);
+
+        if (Random.value > 0.5f)
         {
-            if (Random.value > 0.5f)
-            {
-                spawnPosition.x = Random.value > 0.5f ? spawnArea.bounds.min.x : spawnArea.bounds.max.x;
-            }
-            else
-            {
-                spawnPosition.y = Random.value > 0.5f ? spawnArea.bounds.min.y : spawnArea.bounds.max.y;
-            }
+            spawnPosition.x = Random.value > 0.5f ? spawnArea.bounds.min.x : spawnArea.bounds.max.x;
         }
-        
-        var item = Random.value > 0.2f ? Instantiate(pointItemPrefab, transform) : Instantiate(powerItemPrefab, transform);
-        item.transform.position = new Vector3(spawnPosition.x, spawnPosition.y, transform.position.z);
+        else
+        {
+            spawnPosition.y = Random.value > 0.5f ? spawnArea.bounds.min.y : spawnArea.bounds.max.y;
+        }
+
+        return new Vector3(spawnPosition.x, spawnPosition.y, transform.position.z);
+    }
+
+    void SpawnPointItem()
+    {
+        var pointItem = Instantiate(pointItemPrefab, transform);
+        pointItem.transform.position = GetSpawnPosition();
+    }
+    
+    void SpawnPowerItem()
+    {
+        var powerItem = Instantiate(powerItemPrefab, transform);
+        powerItem.transform.position = GetSpawnPosition();
     }
 }

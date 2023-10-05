@@ -612,12 +612,6 @@ Transform:
   - {fileID: 1634358455}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!120 &655271137 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 1344942592792932602, guid: 78d2badd4a9eb1e41ac4c1882085bae3,
-    type: 3}
-  m_PrefabInstance: {fileID: 7564603020745593926}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &656880745
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,7 +682,6 @@ GameObject:
   m_Component:
   - component: {fileID: 694020734}
   - component: {fileID: 694020740}
-  - component: {fileID: 694020742}
   - component: {fileID: 694020735}
   - component: {fileID: 694020737}
   - component: {fileID: 694020743}
@@ -760,23 +753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed098815fb63f248a4d9d37bd2f3fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &694020742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 694020733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65cfb73f92ca9354295f9075f6cc1812, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxCentripetalAcceleration: 100
-  _minCentripetalAcceleration: 0.1
-  _initialCentripetalAcceleration: 20
-  _joystick: {fileID: 1184273686}
-  _acceroLine: {fileID: 655271137}
 --- !u!114 &694020743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2993,6 +2969,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7294256240673469018, guid: 78d2badd4a9eb1e41ac4c1882085bae3,
+        type: 3}
+      propertyPath: _joystick
+      value: 
+      objectReference: {fileID: 1184273686}
+    - target: {fileID: 7294256240673469018, guid: 78d2badd4a9eb1e41ac4c1882085bae3,
+        type: 3}
+      propertyPath: _minCentripetalAcceleration
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7294256240673469018, guid: 78d2badd4a9eb1e41ac4c1882085bae3,
+        type: 3}
+      propertyPath: _initialCentripetalAcceleration
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7530364390372900339, guid: 78d2badd4a9eb1e41ac4c1882085bae3,
         type: 3}

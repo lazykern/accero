@@ -125,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5430009842277218663}
   - component: {fileID: 5384766162585909692}
+  - component: {fileID: 7294256240673469018}
   m_Layer: 2
   m_Name: Accero
   m_TagString: Untagged
@@ -184,6 +185,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3
+--- !u!114 &7294256240673469018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530364390372900339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65cfb73f92ca9354295f9075f6cc1812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCentripetalAcceleration: 100
+  _minCentripetalAcceleration: 0.1
+  _initialCentripetalAcceleration: 20
+  _joystick: {fileID: 0}
+  _acceroLine: {fileID: 1344942592792932602}
 --- !u!1 &7723330690485958919
 GameObject:
   m_ObjectHideFlags: 0

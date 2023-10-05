@@ -6,7 +6,7 @@ public class AcceroController : MonoBehaviour
     float _maxCentripetalAcceleration = 100f;
 
     [SerializeField]
-    float _minCentripetalAcceleration = 0.1f;
+    float _minCentripetalAcceleration;
 
     [SerializeField]
     float _initialCentripetalAcceleration = 20f;
@@ -42,8 +42,8 @@ public class AcceroController : MonoBehaviour
         
         float centripetalAccelerationPercent = (centripetalAcceleration - _minCentripetalAcceleration) / (_maxCentripetalAcceleration - _minCentripetalAcceleration);
         
-        _acceroLine.startColor = Color.Lerp(Color.white, Color.red, centripetalAccelerationPercent);
-        _acceroLine.endColor = Color.Lerp(Color.white, Color.red, centripetalAccelerationPercent);
+        _acceroLine.startColor = Color.Lerp(Color.cyan, Color.red, centripetalAccelerationPercent);
+        _acceroLine.endColor = Color.Lerp(Color.cyan, Color.red, centripetalAccelerationPercent);
     }
 
     void FixedUpdate()
