@@ -1,3 +1,7 @@
+using System.Collections;
+using JetBrains.Annotations;
+using TMPro;
+using Unity.Collections;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
@@ -24,9 +28,20 @@ public class ItemManager : MonoBehaviour
     
     [SerializeField]
     float powerItemInterval = 25f;
+
+    [SerializeField]
+    [CanBeNull]
+    Transform pointItemDestroyLocation;
+    
+    [SerializeField]
+    [CanBeNull]
+    Transform powerItemDestroyLocation;
     
     float _spawnTimer;
     float _powerItemTimer;
+
+    protected internal int CollectedPointItems;
+    protected internal int CollectedPowerItems;
 
     void Awake()
     {
@@ -90,8 +105,25 @@ public class ItemManager : MonoBehaviour
         powerItem.transform.position = GetSpawnPosition();
     }
     
-    protected internal static void Collect(Item item)
+    protected internal void Collect(Item item)
     {
-        Destroy(item.gameObject);
+        ScoreManager.Instance.AddScore(item.Score);
+        
+        var destroyLocation = (item is PowerItem ? powerItemDestroyLocation?.position : pointItemDestroyLocation?.position) ?? (Vector3)item.transform.position;
+        switch (item)
+        {
+            case PointItem:
+                CollectedPointItems++;
+                break;
+            case PowerItem:
+                CollectedPowerItems++;
+                break;
+            default:
+                destroyLocation = item.transform.position;
+                break;
+        }
+
+        StartCoroutine(Utils.DestroyItem(item, destroyLocation));
     }
+
 }

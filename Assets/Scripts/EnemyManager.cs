@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -27,9 +23,16 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     Image enemySpawnBar;
     
+    [SerializeField] Transform accelerationEnemyDestroyLocation;
+    [SerializeField] Transform velocityEnemyDestroyLocation;
+    
+    
     float _spawnTimer;
     float _healthIncreaseTimer;
-    
+
+    protected internal int AccelerationEnemyKillCount;
+    protected internal int VelocityEnemyKillCount;
+
     void Awake()
     {
         Instance = this;
@@ -51,12 +54,12 @@ public class EnemyManager : MonoBehaviour
             _spawnTimer = spawnInterval;
             SpawnEnemy();
         }
-        
-        if (_healthIncreaseTimer <= 0)
-        {
-            _healthIncreaseTimer = healthIncreaseInterval;
-            baseHealth *= healthMultiplier;
-        }
+
+        if (!(_healthIncreaseTimer <= 0))
+            return;
+
+        _healthIncreaseTimer = healthIncreaseInterval;
+        baseHealth *= healthMultiplier;
     }
 
     void Update()
@@ -71,9 +74,21 @@ public class EnemyManager : MonoBehaviour
         enemy.transform.localPosition = Vector3.zero;
     }
     
-    protected internal static void Kill(Enemy enemy)
+    protected internal void Kill(Enemy enemy)
     {
         ScoreManager.Instance.AddScore(1);
-        Destroy(enemy.gameObject);
+
+        var destroyLocation = (enemy is AccelerationEnemy ? accelerationEnemyDestroyLocation?.position : velocityEnemyDestroyLocation?.position) ?? (Vector3)enemy.transform.position;
+        switch (enemy)
+        {
+            case AccelerationEnemy _:
+                AccelerationEnemyKillCount++;
+                break;
+            case VelocityEnemy _:
+                VelocityEnemyKillCount++;
+                break;
+        }
+        
+        StartCoroutine(Utils.DestroyItem(enemy, destroyLocation));
     }
 }

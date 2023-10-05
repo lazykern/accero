@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField]
-    int _score = 1;
-    
+    [SerializeField] int score = 1;
+    protected internal int Score
+    {
+        get => score;
+    }
+
     [SerializeField]
     GameObject _effectPrefab;
     
@@ -15,14 +19,6 @@ public class Item : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
             return;
 
-        ScoreManager.Instance.AddScore(_score);
-    }
-    
-    protected virtual void OnPickup()
-    {
-        if (_effectPrefab != null)
-            Instantiate(_effectPrefab, transform.position, Quaternion.identity);
-        
-        Destroy(gameObject);
+        ItemManager.Instance.Collect(this);
     }
 }

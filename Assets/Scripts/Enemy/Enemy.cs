@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
     {
         if (_health <= 0)
         {
-            EnemyManager.Kill(this);
+            EnemyManager.Instance.Kill(this);
             return;
         }
 
