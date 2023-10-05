@@ -1,13 +1,31 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
+[Singleton]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    Joystick _joystick;
-
+    
+    public static PlayerController Instance { get; private set; }
+    
     bool _dragging;
-
     Vector3 _dragStartPosition;
+
+    [SerializeField] Player _player;
+    
+    public Player Player
+    {
+        get => _player;
+    }
+    
+    void Awake()
+    {
+        Instance = this;
+        if (_player == null)
+        {
+            _player = FindObjectOfType<Player>();
+        }
+    }
 
     void Update()
     {
@@ -16,23 +34,23 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayerGun()
     {
-        if (_joystick.Direction.magnitude > 0.1 && !_dragging)
+        if (MainManager.Instance.PlayerJoystick.Direction.magnitude > 0.1 && !_dragging)
         {
             _dragging = true;
         }
 
-        if (_joystick.Direction.magnitude > 0.1 && _dragging)
+        if (MainManager.Instance.PlayerJoystick.Direction.magnitude > 0.1 && _dragging)
         {
 
-            Player.Instance.DisplayLine();
-            Player.Instance.transform.rotation = Quaternion.LookRotation(_joystick.Direction);
+            _player.DisplayLine();
+            _player.transform.rotation = Quaternion.LookRotation(MainManager.Instance.PlayerJoystick.Direction);
         }
 
-        if (_joystick.Direction.magnitude != 0 || !_dragging)
+        if (MainManager.Instance.PlayerJoystick.Direction.magnitude != 0 || !_dragging)
             return;
 
-        Player.Instance.TryShoot();
-        Player.Instance.DisableLine();
+        _player.TryShoot();
+        _player.DisableLine();
         _dragging = false;
     }
 }

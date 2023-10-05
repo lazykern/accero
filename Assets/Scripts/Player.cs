@@ -52,14 +52,7 @@ public class Player : MonoBehaviour
     
     public int Health { get; private set; }
 
-    public static Player Instance { get; private set; }
-
     public Rigidbody rb { get; private set; }
-
-    void Awake()
-    {
-        Instance = this;
-    }
 
     void Start()
     {
@@ -128,8 +121,8 @@ public class Player : MonoBehaviour
     public void DisplayLine()
     {
         _lineRenderer.enabled = true;
-        _lineRenderer.SetPosition(0, Instance.transform.position);
-        _lineRenderer.SetPosition(1, Instance.transform.position + Instance.transform.forward * (10 * GameManager.Instance.ScaleFactor()));
+        _lineRenderer.SetPosition(0, PlayerController.Instance.Player.transform.position);
+        _lineRenderer.SetPosition(1, PlayerController.Instance.Player.transform.position + PlayerController.Instance.Player.transform.forward * (10 * GameManager.Instance.ScaleFactor()));
 
         _lineRenderer.startColor = CanShoot() ? Color.green : Color.red;
     }

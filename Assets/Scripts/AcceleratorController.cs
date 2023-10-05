@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AcceroController : MonoBehaviour
+public class AcceleratorController : MonoBehaviour
 {
     [SerializeField]
     float _maxCentripetalAcceleration = 100f;
@@ -12,11 +12,8 @@ public class AcceroController : MonoBehaviour
     float _initialCentripetalAcceleration = 20f;
 
     [SerializeField]
-    Joystick _joystick;
-
-    [SerializeField]
-    LineRenderer _acceroLine;
-
+    LineRenderer _accelerationLine;
+    
     float centripetalAcceleration;
 
     void Start()
@@ -26,43 +23,43 @@ public class AcceroController : MonoBehaviour
 
     void Update()
     {
-        if (!_joystick.IsOnTouch)
+        if (!MainManager.Instance.AcceleratorJoystick.IsOnTouch)
         {
-            _acceroLine.enabled = false;
+            _accelerationLine.enabled = false;
             return;
         }
 
-        _acceroLine.enabled = true;
+        _accelerationLine.enabled = true;
         UpdateAcceroLine();
 
-        float joystickPercent = (_joystick.Vertical + _joystick.HandleRange) / (2 * _joystick.HandleRange);
+        float joystickPercent = (MainManager.Instance.AcceleratorJoystick.Vertical + MainManager.Instance.AcceleratorJoystick.HandleRange) / (2 * MainManager.Instance.AcceleratorJoystick.HandleRange);
         centripetalAcceleration = joystickPercent < 0.5f
             ? Mathf.Lerp(_minCentripetalAcceleration, _initialCentripetalAcceleration, joystickPercent / 0.5f)
             : Mathf.Lerp(_initialCentripetalAcceleration, _maxCentripetalAcceleration, (joystickPercent - 0.5f) * 2);
         
         float centripetalAccelerationPercent = (centripetalAcceleration - _minCentripetalAcceleration) / (_maxCentripetalAcceleration - _minCentripetalAcceleration);
         
-        _acceroLine.startColor = Color.Lerp(Color.cyan, Color.red, centripetalAccelerationPercent);
-        _acceroLine.endColor = Color.Lerp(Color.cyan, Color.red, centripetalAccelerationPercent);
+        _accelerationLine.startColor = Color.Lerp(Color.cyan, Color.red, centripetalAccelerationPercent);
+        _accelerationLine.endColor = Color.Lerp(Color.cyan, Color.red, centripetalAccelerationPercent);
     }
 
     void FixedUpdate()
     {
-        if (!_joystick.IsOnTouch)
+        if (!MainManager.Instance.AcceleratorJoystick.IsOnTouch)
         {
             return;
         }
 
-        var delta = transform.position - Player.Instance.transform.position;
+        var delta = transform.position - PlayerController.Instance.Player.transform.position;
         var direction = delta.normalized;
         var force = direction * (centripetalAcceleration * GameManager.Instance.ScaleFactor());
 
-        Player.Instance.rb.AddForce(force, ForceMode.Acceleration);
+        PlayerController.Instance.Player.rb.AddForce(force, ForceMode.Acceleration);
     }
 
     void UpdateAcceroLine()
     {
-        _acceroLine.SetPosition(0, transform.position);
-        _acceroLine.SetPosition(1, Player.Instance.transform.position);
+        _accelerationLine.SetPosition(0, transform.position);
+        _accelerationLine.SetPosition(1, PlayerController.Instance.Player.transform.position);
     }
 }
