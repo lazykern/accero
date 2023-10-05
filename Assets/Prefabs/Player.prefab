@@ -107,6 +107,7 @@ MonoBehaviour:
   _gunForce: 100
   _gunCooldown: 1
   _knockbackFromEnemy: 10
+  _hitInvincibilityTime: 2
   _bulletPrefab: {fileID: 4223090643263721816, guid: 79eba776a6891df4c8f2aeb9d75c2ba6,
     type: 3}
 --- !u!120 &8685960549955077354

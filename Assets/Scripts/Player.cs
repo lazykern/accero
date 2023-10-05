@@ -35,13 +35,20 @@ public class Player : MonoBehaviour
     
     [SerializeField]
     float _knockbackFromEnemy = 10f;
+    
+    [SerializeField]
+    float _hitInvincibilityTime = 2f;
 
     [SerializeField]
     Bullet _bulletPrefab;
 
     float _lastShootTime;
+    
+    float _lastHitTime;
 
     LineRenderer _lineRenderer;
+    
+    MeshRenderer _renderer;
     
     public int Health { get; private set; }
 
@@ -59,7 +66,9 @@ public class Player : MonoBehaviour
         Health = maxHealth;
         rb = GetComponent<Rigidbody>();
         _lineRenderer = GetComponent<LineRenderer>();
+        _renderer = GetComponent<MeshRenderer>();
         _lastShootTime = -_gunCooldown;
+        _lastHitTime = -_hitInvincibilityTime;
     }
 
     void Update()
@@ -68,6 +77,15 @@ public class Player : MonoBehaviour
         {
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
         }
+        
+        if (IsInvincible())
+        {
+            _renderer.material.color = Color.red;
+        }
+        else
+        {
+            _renderer.material.color = Color.white;
+        } 
     }
 
     void OnCollisionEnter(Collision other)
@@ -80,7 +98,7 @@ public class Player : MonoBehaviour
                 break;
             case "Enemy":
                 Hit();
-                rb.AddForce(-other.contacts[0].normal * (_knockbackFromEnemy * GameManager.Instance.ScaleFactor()), ForceMode.Impulse);
+                rb.AddForce((transform.position - other.transform.position).normalized * _knockbackFromEnemy * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
                 break;
         }
     }
@@ -154,7 +172,7 @@ public class Player : MonoBehaviour
         power += 1;
         gunPower *= gunPowerIncreaseFactor;
 
-        if (power % 10 == 0 && _bulletCount < _maxBulletCount)
+        if (power % 5 == 0 && _bulletCount < _maxBulletCount)
         {
             _bulletCount += 1;
         }
@@ -164,26 +182,33 @@ public class Player : MonoBehaviour
     {
         return Time.time - _lastShootTime < _gunCooldown;
     }
-
+    
     bool CanShoot()
     {
-        return !IsInCooldown();
+        return Time.time - _lastShootTime >= _gunCooldown;
+    }
+    
+    bool IsInvincible()
+    {
+        return Time.time - _lastHitTime < _hitInvincibilityTime;
     }
 
     void Hit()
     {
-        if (Health <= 0)
+        if (IsInvincible())
         {
             return;
         }
         
         Health -= 1;
+        _lastHitTime = Time.time;
         
         if (Health <= 0)
         {
             Die();
         }
     }
+    
 
     void Die()
     {

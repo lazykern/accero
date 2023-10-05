@@ -17,15 +17,16 @@ public class VelocityEnemy : Enemy
     {
         base.Update();
 
-        var player = Player.Instance;
-        if (player == null)
-            return;
-        var direction = player.transform.position - transform.position;
-        rb.AddForce(direction.normalized * (_acceleration * GameManager.Instance.ScaleFactor()), ForceMode.Acceleration);
-
         if (rb.velocity.magnitude > _maxVelocity * GameManager.Instance.ScaleFactor())
         {
             rb.velocity = rb.velocity.normalized * (_maxVelocity * GameManager.Instance.ScaleFactor());
         }
+    }
+    
+    new void FixedUpdate()
+    {
+        var player = Player.Instance;
+        var direction = player.transform.position - transform.position;
+        rb.AddForce(direction.normalized * (_acceleration * GameManager.Instance.ScaleFactor()), ForceMode.Acceleration);
     }
 }

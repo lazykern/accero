@@ -6,16 +6,18 @@ public class Enemy : MonoBehaviour
     protected float _maxHealth = 5;
 
     [SerializeField]
-    protected int _knockbackFromBullet = 20;
+    protected float _knockbackFromBullet = 20f;
 
     [SerializeField]
-    protected int _knockbackFromPlayer = 10;
+    protected float _knockbackFromPlayer = 20f;
 
     Color _color;
 
     float _health;
 
     Renderer _renderer;
+    
+    Collider _collider;
 
     protected Rigidbody rb { get; private set; }
 
@@ -23,6 +25,7 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         _renderer = GetComponent<Renderer>();
+        _collider = GetComponent<Collider>();
     }
 
     protected void Start()
@@ -53,6 +56,7 @@ public class Enemy : MonoBehaviour
         {
             case "Bullet":
                 Hit(other.GetComponent<Bullet>().power);
+                rb.velocity = Vector3.zero;
                 rb.AddForce((other.transform.position - transform.position).normalized * _knockbackFromBullet * GameManager.Instance.ScaleFactor(), ForceMode.Impulse);
                 break;
             case "Player":
@@ -71,6 +75,7 @@ public class Enemy : MonoBehaviour
     {
         if (_health <= 0)
         {
+            _collider.enabled = false;
             EnemyManager.Instance.Kill(this);
             return;
         }

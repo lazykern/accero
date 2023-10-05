@@ -18,8 +18,6 @@ public class AccelerationEnemy : Enemy
     void FixedUpdate()
     {
         var player = Player.Instance;
-        if (player == null)
-            return;
         var direction = player.transform.position - transform.position;
         rb.AddForce(direction.normalized * (acceleration * GameManager.Instance.ScaleFactor()), ForceMode.Acceleration);
     }
