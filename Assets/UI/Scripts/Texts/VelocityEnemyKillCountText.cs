@@ -12,6 +12,6 @@ public class VelocityEnemyKillCountText : MonoBehaviour
 
     void Update()
     {
-        _text.text = EnemyManager.Instance.AccelerationEnemyKillCount.ToString();
+        _text.text = EnemyManager.Instance.VelocityEnemyKillCount.ToString();
     }
 }
