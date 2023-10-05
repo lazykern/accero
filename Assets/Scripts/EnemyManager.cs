@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [Singleton]
@@ -22,6 +23,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] VelocityEnemy velocityEnemyPrefab;
     
     [SerializeField] int maxEnemies = 5;
+
+    [SerializeField]
+    Image enemySpawnBar;
     
     float _spawnTimer;
     float _healthIncreaseTimer;
@@ -53,6 +57,11 @@ public class EnemyManager : MonoBehaviour
             _healthIncreaseTimer = healthIncreaseInterval;
             baseHealth *= healthMultiplier;
         }
+    }
+
+    void Update()
+    {
+        enemySpawnBar.fillAmount = 1 - _spawnTimer / spawnInterval;
     }
 
     void SpawnEnemy()

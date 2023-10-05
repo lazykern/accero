@@ -1,10 +1,14 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Singleton]
 public class Player : MonoBehaviour
 {
+    [SerializeField]
+    internal int maxHealth = 3;
+    
     [SerializeField]
     int power = 1;
 
@@ -28,6 +32,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     float _gunCooldown = 1f;
+    
+    [SerializeField]
+    float _knockbackFromEnemy = 10f;
 
     [SerializeField]
     Bullet _bulletPrefab;
@@ -35,6 +42,8 @@ public class Player : MonoBehaviour
     float _lastShootTime;
 
     LineRenderer _lineRenderer;
+    
+    public int Health { get; private set; }
 
     public static Player Instance { get; private set; }
 
@@ -47,6 +56,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        Health = maxHealth;
         rb = GetComponent<Rigidbody>();
         _lineRenderer = GetComponent<LineRenderer>();
         _lastShootTime = -_gunCooldown;
@@ -69,7 +79,8 @@ public class Player : MonoBehaviour
                 rb.velocity = direction * rb.velocity.magnitude;
                 break;
             case "Enemy":
-                Player.Instance.rb.useGravity = true;
+                Hit();
+                rb.AddForce(-other.contacts[0].normal * (_knockbackFromEnemy * GameManager.Instance.ScaleFactor()), ForceMode.Impulse);
                 break;
         }
     }
@@ -154,8 +165,28 @@ public class Player : MonoBehaviour
         return Time.time - _lastShootTime < _gunCooldown;
     }
 
-    public bool CanShoot()
+    bool CanShoot()
     {
         return !IsInCooldown();
+    }
+
+    void Hit()
+    {
+        if (Health <= 0)
+        {
+            return;
+        }
+        
+        Health -= 1;
+        
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        rb.useGravity = true;
     }
 }
