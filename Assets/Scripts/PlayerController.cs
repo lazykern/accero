@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         {
 
             _player.DisplayLine();
-            _player.transform.rotation = Quaternion.LookRotation(MainManager.Instance.PlayerJoystick.Direction);
+            _player.transform.rotation = Quaternion.LookRotation(MainManager.Instance.PlayerJoystick.Direction.normalized);
         }
 
         if (MainManager.Instance.PlayerJoystick.Direction.magnitude != 0 || !_dragging)
