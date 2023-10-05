@@ -69,7 +69,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 1
   _effectPrefab: {fileID: 0}
-  _renderer: {fileID: 5748775712366002277}
 --- !u!1001 &6471630057672100616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,12 +137,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90dbc9cfa90dcd04fb51cb2a4fe4109e, type: 3}
---- !u!23 &5748775712366002277 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 90dbc9cfa90dcd04fb51cb2a4fe4109e,
-    type: 3}
-  m_PrefabInstance: {fileID: 6471630057672100616}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6792941452494384355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 90dbc9cfa90dcd04fb51cb2a4fe4109e,
