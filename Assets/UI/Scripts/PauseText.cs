@@ -7,6 +7,9 @@ public class PauseText : MonoBehaviour
 {
     TextMeshProUGUI _text;
     
+    [SerializeField] string textOnPause = "Resume";
+    [SerializeField] string textOnPlay = "Pause";
+    
     void Start()
     {
         _text = GetComponent<TextMeshProUGUI>();
@@ -14,6 +17,6 @@ public class PauseText : MonoBehaviour
 
     void Update()
     {
-        _text.text = GameManager.IsPaused() ? "Resume" : "Pause";
+        _text.text = GameManager.Instance.State == GameState.Paused ? textOnPause : textOnPlay;
     }
 }

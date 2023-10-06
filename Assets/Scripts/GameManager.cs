@@ -6,12 +6,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    
-    Camera _camera;
+
+    public GameState State { get; private set; }
 
     void Awake()
     {
         Instance = this;
+        Instance.State = GameState.Start;
     }
     
     public float ScaleFactor()
@@ -21,16 +22,22 @@ public class GameManager : MonoBehaviour
     
     public static void Pause()
     {
+        Instance.State = GameState.Paused;
         Time.timeScale = 0;
     }
     
     public static void Resume()
     {
+        Instance.State = GameState.Playing;
         Time.timeScale = 1;
     }
-    
-    public static bool IsPaused()
-    {
-        return Time.timeScale == 0;
-    }
+}
+
+
+public enum GameState
+{
+    Start,
+    Playing,
+    Paused,
+    GameOver
 }

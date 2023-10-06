@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.State != GameState.Playing)
+            return;
         UpdatePlayerGun();
     }
 

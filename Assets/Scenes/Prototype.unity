@@ -518,6 +518,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c213c4d0a9f7aa448dfdbea8730d9d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textOnPause: Resume
+  textOnPlay: Pause
 --- !u!114 &915937489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1578,6 +1580,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 31675292516854049, guid: 77ed020581629c349b21a9190f52dc62,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 31675292516854049, guid: 77ed020581629c349b21a9190f52dc62,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 31675292516854049, guid: 77ed020581629c349b21a9190f52dc62,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 31675292516854049, guid: 77ed020581629c349b21a9190f52dc62,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1589,7 +1606,7 @@ PrefabInstance:
     - target: {fileID: 31675292516854049, guid: 77ed020581629c349b21a9190f52dc62,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7
+      value: 6.81
       objectReference: {fileID: 0}
     - target: {fileID: 31675292516854049, guid: 77ed020581629c349b21a9190f52dc62,
         type: 3}
@@ -1626,10 +1643,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2661201623571815713, guid: 77ed020581629c349b21a9190f52dc62,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2904121701891824586, guid: 77ed020581629c349b21a9190f52dc62,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3202452059150792980, guid: 77ed020581629c349b21a9190f52dc62,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3313349159734012473, guid: 77ed020581629c349b21a9190f52dc62,
         type: 3}
       propertyPath: m_Name
       value: Accero
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635241115683206034, guid: 77ed020581629c349b21a9190f52dc62,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787209479470051390, guid: 77ed020581629c349b21a9190f52dc62,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

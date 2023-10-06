@@ -94,6 +94,6 @@ public class EnemyManager : MonoBehaviour
                 break;
         }
         
-        StartCoroutine(Utils.DestroyItem(enemy, destroyLocation));
+        StartCoroutine(Utils.MoveToLocationAndDestroy(enemy, destroyLocation));
     }
 }

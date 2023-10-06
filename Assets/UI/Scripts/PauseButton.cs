@@ -15,7 +15,7 @@ public class PauseButton : MonoBehaviour, IPointerUpHandler
     
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (GameManager.IsPaused())
+        if (GameManager.Instance.State == GameState.Paused)
         {
             GameManager.Resume();
         }

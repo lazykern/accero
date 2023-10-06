@@ -33,7 +33,7 @@ public class EnemySpawnIndicator : MonoBehaviour
 
     void Update()
     {
-        SetFill(EnemyManager.Instance.SpawnTimer / EnemyManager.Instance.SpawnInterval);
+        SetFill(1 - EnemyManager.Instance.SpawnTimer / EnemyManager.Instance.SpawnInterval);
         SetSprite(EnemyManager.Instance.NextEnemyType);
     }
 }

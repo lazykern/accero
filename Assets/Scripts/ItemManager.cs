@@ -123,7 +123,7 @@ public class ItemManager : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(Utils.DestroyItem(item, destroyLocation));
+        StartCoroutine(Utils.MoveToLocationAndDestroy(item, destroyLocation));
     }
 
 }
