@@ -24,7 +24,6 @@ public class DynamicJoystick : Joystick
     public override void OnPointerDown(PointerEventData eventData)
     {
         background.anchoredPosition = ScreenPointToAnchoredPosition(eventData.position);
-        Debug.Log(background.anchoredPosition);
         base.OnPointerDown(eventData);
     }
 
