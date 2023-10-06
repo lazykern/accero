@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PauseButton : MonoBehaviour, IPointerUpHandler
 {
+    Button _button;
+    
+    void Start()
+    {
+        _button = GetComponent<Button>();
+    }
+    
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (Time.timeScale == 0)
+        if (GameManager.IsPaused())
         {
             GameManager.Resume();
         }
@@ -15,5 +23,10 @@ public class PauseButton : MonoBehaviour, IPointerUpHandler
         {
             GameManager.Pause();
         }
+    }
+    
+    void Update()
+    {
+        _button.interactable = MainManager.Instance.IsGameRunning();
     }
 }

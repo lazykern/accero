@@ -28,4 +28,9 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+    
+    public static bool IsPaused()
+    {
+        return Time.timeScale == 0;
+    }
 }

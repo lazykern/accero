@@ -44,4 +44,9 @@ public class MainManager : MonoBehaviour
         game = Instantiate(gamePrefab, position, rotation);
         game.transform.localScale = scale;
     }
+    
+    public bool IsGameRunning()
+    {
+        return game != null;
+    }
 }
