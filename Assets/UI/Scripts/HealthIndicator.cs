@@ -10,7 +10,7 @@ public class HealthIndicator : MonoBehaviour
     [SerializeField] float horizontalSpacing = 4f;
     [SerializeField] Player player;
 
-    readonly Queue<Heart> _hearts = new Queue<Heart>();
+    readonly List<Heart> _hearts = new List<Heart>();
     
     void Start()
     {
@@ -30,19 +30,16 @@ public class HealthIndicator : MonoBehaviour
         {
             var heart = Instantiate(heartPrefab, transform).GetComponent<Heart>();
             heart.transform.localPosition = new Vector3(startX + (i * (heartWidth + horizontalSpacing) + heartWidth / 2f), center.y, 0);
-            _hearts.Enqueue(heart);
+            _hearts.Add(heart);
         }
         
     }
     
     void Update()
     {
-        if (player.Health >= _hearts.Count)
-            return;
-        if (_hearts.Count == 0)
-            return;
-            
-        var heart = _hearts.Dequeue();
-        heart.Image.color = new Color(heart.Image.color.r, heart.Image.color.g, heart.Image.color.b, 0.2f);
+        for (int i = 0; i < _hearts.Count; i++)
+        {
+            _hearts[_hearts.Count - 1 - i].Image.color = i < player.Health ? Color.white : new Color(1, 1, 1, 0.5f);
+        }
     }
 }

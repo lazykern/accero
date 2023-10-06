@@ -15,10 +15,10 @@ public class ItemManager : MonoBehaviour
     GameObject powerItemPrefab;
     
     [SerializeField]
-    Collider2D spawnArea;
+    Collider spawnArea;
 
     [SerializeField]
-    Collider2D excludeArea;
+    Collider excludeArea;
 
     [SerializeField]
     int maxItems = 5;
@@ -55,6 +55,9 @@ public class ItemManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.State != GameState.Playing)
+            return;
+        
         _spawnTimer -= Time.fixedDeltaTime;
         _powerItemTimer -= Time.fixedDeltaTime;
 
@@ -76,10 +79,10 @@ public class ItemManager : MonoBehaviour
 
     Vector3 GetSpawnPosition()
     {
-        var spawnPosition = new Vector2(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y));
+        var spawnPosition = new Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y), transform.position.z);
 
-        if (!excludeArea.OverlapPoint(spawnPosition))
-            return new Vector3(spawnPosition.x, spawnPosition.y, transform.position.z);
+        if (!excludeArea.bounds.Contains(spawnPosition))
+            return spawnPosition;
 
         if (Random.value > 0.5f)
         {
@@ -90,7 +93,7 @@ public class ItemManager : MonoBehaviour
             spawnPosition.y = Random.value > 0.5f ? spawnArea.bounds.min.y : spawnArea.bounds.max.y;
         }
 
-        return new Vector3(spawnPosition.x, spawnPosition.y, transform.position.z);
+        return spawnPosition;
     }
 
     void SpawnPointItem()

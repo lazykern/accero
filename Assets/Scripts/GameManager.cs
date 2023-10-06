@@ -7,29 +7,177 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public GameState State { get; private set; }
+    public GameState State { get; private set; } = GameState.Start;
+    private GameState _previousState = GameState.Start;
+    
+    [SerializeField] List<GameObject> _activeOnStart;
+    [SerializeField] List<GameObject> _deactiveOnStart;
+    
+    [SerializeField] List<GameObject> _activeOnPlaying;
+    [SerializeField] List<GameObject> _deactiveOnPlaying;
+    
+    [SerializeField] List<GameObject> _activeOnPaused;
+    [SerializeField] List<GameObject> _deactiveOnPaused;
+    
+    [SerializeField] List<GameObject> _activeOnGameOver;
+    [SerializeField] List<GameObject> _deactiveOnGameOver;
 
     void Awake()
     {
         Instance = this;
-        Instance.State = GameState.Start;
     }
     
+    void Start()
+    {
+        UpdateGameObjects();
+    }
+
+    void FixedUpdate()
+    {
+        if (State == GameState.SetPosition)
+        {
+            DoSetPosition();
+        }
+    }
+
+    void DoSetPosition()
+    {
+        if (MainManager.Instance.AcceleratorJoystick.Vertical != 0)
+        {
+            transform.Translate(Vector3.forward * (Time.deltaTime * MainManager.Instance.AcceleratorJoystick.Vertical * 2));
+        }
+        
+        if (MainManager.Instance.PlayerJoystick.Direction.magnitude > 0)
+        {
+            transform.Translate(Vector3.right * (Time.deltaTime * MainManager.Instance.PlayerJoystick.Direction.x * 2));
+        }
+    }
+
     public float ScaleFactor()
     {
         return transform.localScale.x;
     }
     
-    public static void Pause()
+    public void StartGame()
     {
-        Instance.State = GameState.Paused;
-        Time.timeScale = 0;
+        ChangeState(GameState.Playing);
     }
     
-    public static void Resume()
+    public void SetPosition()
     {
-        Instance.State = GameState.Playing;
-        Time.timeScale = 1;
+        if (State == GameState.SetPosition)
+        {
+            transform.SetParent(null);
+            ChangeState(_previousState);
+        }
+        else
+        {
+            transform.SetParent(MainManager.Instance.Camera.transform);
+            transform.localPosition = new Vector3(0, 0, 5);
+            transform.LookAt(MainManager.Instance.Camera.transform);
+            ChangeState(GameState.SetPosition);
+        }
+    }
+    
+    public void PauseGame()
+    {
+        ChangeState(GameState.Paused);
+    }
+    
+    public void ResumeGame()
+    {
+        ChangeState(GameState.Playing);
+    }
+    
+    public void TogglePause()
+    {
+        switch (State)
+        {
+            case GameState.Playing:
+                PauseGame();
+                break;
+            case GameState.Paused:
+                ResumeGame();
+                break;
+            case GameState.Start:
+                break;
+            case GameState.GameOver:
+                break;
+            case GameState.SetPosition:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+    
+    public void GameOver()
+    {
+        ChangeState(GameState.GameOver);
+    }
+    
+    public void ChangeState(GameState state)
+    {
+        // if (State == state)
+        //     return;
+        
+        
+        switch (state)
+        {
+            case GameState.Start:
+                break;
+            case GameState.Paused:
+                MainManager.Pause();
+                break;
+            case GameState.Playing:
+                MainManager.Resume();
+                break;
+            case GameState.GameOver:
+                break;
+            case GameState.SetPosition:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+        }
+
+        _previousState = State;
+        State = state;
+        UpdateGameObjects();
+    }
+
+    
+    void UpdateGameObjects()
+    {
+        switch (State)
+        {
+            case GameState.Start:
+                SetActive(_activeOnStart, true);
+                SetActive(_deactiveOnStart, false);
+                break;
+            case GameState.Playing:
+                SetActive(_activeOnPlaying, true);
+                SetActive(_deactiveOnPlaying, false);
+                break;
+            case GameState.Paused:
+                SetActive(_activeOnPaused, true);
+                SetActive(_deactiveOnPaused, false);
+                break;
+            case GameState.GameOver:
+                SetActive(_activeOnGameOver, true);
+                SetActive(_deactiveOnGameOver, false);
+                break;
+            case GameState.SetPosition:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    static void SetActive(List<GameObject> gameObjects, bool active)
+    {
+        foreach (var gameObject in gameObjects)
+        {
+            gameObject.SetActive(active);
+        }
     }
 }
 
@@ -39,5 +187,6 @@ public enum GameState
     Start,
     Playing,
     Paused,
-    GameOver
+    GameOver,
+    SetPosition
 }

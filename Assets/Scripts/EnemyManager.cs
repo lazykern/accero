@@ -48,6 +48,9 @@ public class EnemyManager : MonoBehaviour
     
     void FixedUpdate()
     {
+        if (GameManager.Instance.State != GameState.Playing)
+            return;
+        
         SpawnTimer -= Time.fixedDeltaTime;
         HealthIncreaseTimer -= Time.fixedDeltaTime;
         

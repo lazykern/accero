@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PauseButton : MonoBehaviour
+public class SetPositionButton : MonoBehaviour
 {
     Button _button;
     
@@ -15,7 +15,6 @@ public class PauseButton : MonoBehaviour
     
     void Update()
     {
-        _button.interactable = MainManager.Instance.IsGameRunning() &&
-                               (GameManager.Instance.State == GameState.Playing || GameManager.Instance.State == GameState.Paused);
+        _button.interactable = MainManager.Instance.IsGameRunning() && GameManager.Instance.State != GameState.SetPosition;
     }
 }

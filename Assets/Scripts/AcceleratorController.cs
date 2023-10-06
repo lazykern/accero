@@ -23,6 +23,9 @@ public class AcceleratorController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.State != GameState.Playing)
+            return;
+        
         if (!MainManager.Instance.AcceleratorJoystick.IsOnTouch)
         {
             _accelerationLine.enabled = false;
@@ -41,6 +44,9 @@ public class AcceleratorController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.State != GameState.Playing)
+            return;
+        
         if (!MainManager.Instance.AcceleratorJoystick.IsOnTouch)
         {
             return;

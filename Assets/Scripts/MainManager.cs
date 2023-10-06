@@ -23,6 +23,13 @@ public class MainManager : MonoBehaviour
     {
         get => playerJoystick;
     }
+    
+    Camera _camera;
+    
+    internal Camera Camera
+    {
+        get => _camera;
+    }
 
     void Awake()
     {
@@ -33,7 +40,16 @@ public class MainManager : MonoBehaviour
         }
         else if (Instance != this) Destroy(gameObject);
     }
-    
+
+    void Start()
+    {
+        if (game == null)
+        {
+            game = GameObject.FindWithTag("Game");
+        }
+        _camera = Camera.main;
+    }
+
     public void Restart()
     {
         var position = game.transform.position;
@@ -43,6 +59,16 @@ public class MainManager : MonoBehaviour
         
         game = Instantiate(gamePrefab, position, rotation);
         game.transform.localScale = scale;
+    }
+
+    public static void Pause()
+    {
+        Time.timeScale = 0;
+    }
+    
+    public static void Resume()
+    {
+        Time.timeScale = 1;
     }
     
     public bool IsGameRunning()
