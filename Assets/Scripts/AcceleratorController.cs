@@ -30,17 +30,13 @@ public class AcceleratorController : MonoBehaviour
         }
 
         _accelerationLine.enabled = true;
-        UpdateAcceroLine();
 
         float joystickPercent = (MainManager.Instance.AcceleratorJoystick.Vertical + MainManager.Instance.AcceleratorJoystick.HandleRange) / (2 * MainManager.Instance.AcceleratorJoystick.HandleRange);
         centripetalAcceleration = joystickPercent < 0.5f
             ? Mathf.Lerp(_minCentripetalAcceleration, _initialCentripetalAcceleration, joystickPercent / 0.5f)
             : Mathf.Lerp(_initialCentripetalAcceleration, _maxCentripetalAcceleration, (joystickPercent - 0.5f) * 2);
         
-        float centripetalAccelerationPercent = (centripetalAcceleration - _minCentripetalAcceleration) / (_maxCentripetalAcceleration - _minCentripetalAcceleration);
-        
-        _accelerationLine.startColor = Color.Lerp(Color.cyan, Color.red, centripetalAccelerationPercent);
-        _accelerationLine.endColor = Color.Lerp(Color.cyan, Color.red, centripetalAccelerationPercent);
+        UpdateAcceroLine();
     }
 
     void FixedUpdate()
@@ -61,5 +57,14 @@ public class AcceleratorController : MonoBehaviour
     {
         _accelerationLine.SetPosition(0, transform.position);
         _accelerationLine.SetPosition(1, PlayerController.Instance.Player.transform.position);
+
+        var color = centripetalAcceleration switch
+        {
+            > 0 => Color.Lerp(Color.white, Color.red, centripetalAcceleration / _maxCentripetalAcceleration),
+            < 0 => Color.Lerp(Color.white, Color.green, centripetalAcceleration / _minCentripetalAcceleration),
+            _ => Color.white
+        };
+        _accelerationLine.startColor = color;
+        _accelerationLine.endColor = color;
     }
 }

@@ -1688,9 +1688,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 31675292516854049}
+  - component: {fileID: 8623121075660583115}
   - component: {fileID: 5196626316295832066}
   - component: {fileID: 716687727061846286}
-  - component: {fileID: 8623121075660583115}
   m_Layer: 0
   m_Name: Accero
   m_TagString: Board
@@ -1721,6 +1721,18 @@ Transform:
   - {fileID: 8787209479470051390}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &8623121075660583115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313349159734012473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5916940e2fd5e49aaa023c8c1e0729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5196626316295832066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1747,18 +1759,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 7529304181269776445}
---- !u!114 &8623121075660583115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3313349159734012473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c5916940e2fd5e49aaa023c8c1e0729, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3664398999918702294
 GameObject:
   m_ObjectHideFlags: 0
