@@ -149,5 +149,5 @@ MonoBehaviour:
   _maxHealth: 5
   _knockbackFromBullet: 20
   _knockbackFromPlayer: 10
-  _maxVelocity: 5
-  _acceleration: 5
+  _maxVelocity: 10
+  _acceleration: 15

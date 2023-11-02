@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class Utils: MonoBehaviour
 {
-    public static IEnumerator MoveToLocationAndDestroy(Component component, Vector3 destroyLocation)
+    // ReSharper disable Unity.PerformanceAnalysis
+    public static IEnumerator MoveToLocationAndDestroy(Component component, Vector3 destroyLocation, float t = 0.2f)
     {
-        while (component.transform.position != destroyLocation)
+        float startTime = Time.time;
+        var startPosition = component.transform.position;
+        while (Time.time < startTime + t)
         {
-            component.transform.position = Vector3.MoveTowards(component.transform.position, destroyLocation, 0.1f);
-            yield return new WaitForEndOfFrame();
+            component.transform.position = Vector3.Lerp(startPosition, destroyLocation, (Time.time - startTime) / t);
+            yield return null;
         }
         Destroy(component.gameObject);
     }

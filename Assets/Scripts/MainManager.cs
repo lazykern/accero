@@ -23,13 +23,8 @@ public class MainManager : MonoBehaviour
     {
         get => playerJoystick;
     }
-    
-    Camera _camera;
-    
-    internal Camera Camera
-    {
-        get => _camera;
-    }
+
+    internal Camera Camera { get; private set; }
 
     void Awake()
     {
@@ -47,7 +42,9 @@ public class MainManager : MonoBehaviour
         {
             game = GameObject.FindWithTag("Game");
         }
-        _camera = Camera.main;
+        Camera = Camera.main;
+        
+        game.GetComponent<GameManager>().SetPosition();
     }
 
     public void Restart()

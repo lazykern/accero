@@ -39,7 +39,7 @@ public class HealthIndicator : MonoBehaviour
     {
         for (int i = 0; i < _hearts.Count; i++)
         {
-            _hearts[_hearts.Count - 1 - i].Image.color = i < player.Health ? Color.white : new Color(1, 1, 1, 0.5f);
+            _hearts[_hearts.Count - 1 - i].Image.color = i < player.Health ? Color.white : new Color(1, 1, 1, 0.1f);
         }
     }
 }

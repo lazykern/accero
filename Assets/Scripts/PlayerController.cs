@@ -32,10 +32,10 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.State != GameState.Playing)
             return;
         
-        UpdatePlayerGun();
+        UpdatePlayerDirection();
     }
 
-    void UpdatePlayerGun()
+    void UpdatePlayerDirection()
     {
         if (MainManager.Instance.PlayerJoystick.Direction.magnitude > 0.1 && !_dragging)
         {
@@ -44,9 +44,14 @@ public class PlayerController : MonoBehaviour
 
         if (MainManager.Instance.PlayerJoystick.Direction.magnitude > 0.1 && _dragging)
         {
-
             _player.DisplayLine();
-            _player.transform.rotation = Quaternion.LookRotation(MainManager.Instance.PlayerJoystick.Direction.normalized);
+            
+            var joystickDirection = MainManager.Instance.PlayerJoystick.Direction.normalized;
+            var gameRight = GameManager.Instance.transform.right;
+            var gameUp = GameManager.Instance.transform.up;
+            
+            var direction = gameUp * joystickDirection.y + -gameRight * joystickDirection.x;
+            _player.transform.forward = direction;
         }
 
         if (MainManager.Instance.PlayerJoystick.Direction.magnitude != 0 || !_dragging)
@@ -55,5 +60,10 @@ public class PlayerController : MonoBehaviour
         _player.TryShoot();
         _player.DisableLine();
         _dragging = false;
+    }
+    
+    internal void Die()
+    {
+        GameManager.Instance.GameOver();
     }
 }

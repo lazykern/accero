@@ -25,6 +25,8 @@ public class VelocityEnemy : Enemy
     
     void FixedUpdate()
     {
+        if (!_isAlive)
+            return;
         var player = PlayerController.Instance.Player;
         var direction = player.transform.position - transform.position;
         rb.AddForce(direction.normalized * (_acceleration * GameManager.Instance.ScaleFactor()), ForceMode.Acceleration);

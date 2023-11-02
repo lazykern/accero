@@ -100,12 +100,14 @@ public class ItemManager : MonoBehaviour
     {
         var pointItem = Instantiate(pointItemPrefab, transform);
         pointItem.transform.position = GetSpawnPosition();
+        pointItem.transform.localPosition = new Vector3(pointItem.transform.localPosition.x, pointItem.transform.localPosition.y, 0);
     }
     
     void SpawnPowerItem()
     {
         var powerItem = Instantiate(powerItemPrefab, transform);
         powerItem.transform.position = GetSpawnPosition();
+        powerItem.transform.localPosition = new Vector3(powerItem.transform.localPosition.x, powerItem.transform.localPosition.y, 0);
     }
     
     protected internal void Collect(Item item)

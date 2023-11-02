@@ -44,12 +44,12 @@ public class GameManager : MonoBehaviour
     {
         if (MainManager.Instance.AcceleratorJoystick.Vertical != 0)
         {
-            transform.Translate(Vector3.forward * (Time.deltaTime * MainManager.Instance.AcceleratorJoystick.Vertical * 2));
+            transform.localPosition += MainManager.Instance.AcceleratorJoystick.Vertical * Time.deltaTime * Vector3.forward;
         }
         
         if (MainManager.Instance.PlayerJoystick.Direction.magnitude > 0)
         {
-            transform.Translate(Vector3.right * (Time.deltaTime * MainManager.Instance.PlayerJoystick.Direction.x * 2));
+            transform.localPosition += (Vector3)MainManager.Instance.PlayerJoystick.Direction.normalized * (Time.deltaTime * 2);
         }
     }
 
@@ -73,8 +73,8 @@ public class GameManager : MonoBehaviour
         else
         {
             transform.SetParent(MainManager.Instance.Camera.transform);
-            transform.localPosition = new Vector3(0, 0, 5);
-            transform.LookAt(MainManager.Instance.Camera.transform);
+            transform.localPosition = new Vector3(0, 0, 6);
+            transform.localRotation = new Quaternion(0, 180, 0, 0);
             ChangeState(GameState.SetPosition);
         }
     }
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.GameOver);
     }
     
-    public void ChangeState(GameState state)
+    void ChangeState(GameState state)
     {
         // if (State == state)
         //     return;
@@ -178,6 +178,11 @@ public class GameManager : MonoBehaviour
         {
             gameObject.SetActive(active);
         }
+    }
+
+    public void Restart()
+    {
+        MainManager.Instance.Restart();
     }
 }
 

@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     
     Collider _collider;
 
+    internal bool _isAlive = true;
+
     protected Rigidbody rb { get; private set; }
 
     protected void Awake()
@@ -36,6 +38,11 @@ public class Enemy : MonoBehaviour
 
     protected void Update()
     {
+        
+        if (_health <= 0)
+        {
+            return;
+        }
 
         if (transform.localPosition.z != 0)
         {
@@ -79,6 +86,7 @@ public class Enemy : MonoBehaviour
     void Die()
     {
             _collider.enabled = false;
+            _isAlive = false;
             EnemyManager.Instance.Kill(this);
     }
 }

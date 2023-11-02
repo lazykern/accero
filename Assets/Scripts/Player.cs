@@ -201,10 +201,10 @@ public class Player : MonoBehaviour
             Die();
         }
     }
-    
+
 
     void Die()
     {
-        rb.useGravity = true;
+        PlayerController.Instance.Die();
     }
 }
