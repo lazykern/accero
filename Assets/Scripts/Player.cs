@@ -70,15 +70,8 @@ public class Player : MonoBehaviour
         {
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
         }
-        
-        if (IsInvincible())
-        {
-            _renderer.material.color = Color.red;
-        }
-        else
-        {
-            _renderer.material.color = Color.white;
-        } 
+
+        _renderer.material.color = IsInvincible() ? Color.red : Color.white;
     }
 
     void OnCollisionEnter(Collision other)
@@ -188,7 +181,7 @@ public class Player : MonoBehaviour
 
     void Hit()
     {
-        if (IsInvincible())
+        if (IsInvincible() || Health == 0) 
         {
             return;
         }

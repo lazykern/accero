@@ -1793,7 +1793,6 @@ MonoBehaviour:
   _initialCentripetalAcceleration: 25
   _accelerationLine: {fileID: 5937586984634128067}
   _trajectoryLine: {fileID: 5093376995786674811}
-  _trajectoryLineLength: 50
 --- !u!65 &3211198006478557128
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2077,7 +2076,7 @@ LineRenderer:
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
-    alignment: 1
+    alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
@@ -2242,7 +2241,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.02

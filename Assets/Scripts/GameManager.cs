@@ -51,12 +51,12 @@ public class GameManager : MonoBehaviour
     {
         if (MainManager.Instance.AcceleratorJoystick.Vertical != 0)
         {
-            transform.localPosition += MainManager.Instance.AcceleratorJoystick.Vertical * Time.deltaTime * Vector3.forward;
+            transform.localPosition += Vector3.forward * (MainManager.Instance.AcceleratorJoystick.Vertical * Time.deltaTime * 3);
         }
         
         if (MainManager.Instance.PlayerJoystick.Direction.magnitude > 0)
         {
-            transform.localPosition += (Vector3)MainManager.Instance.PlayerJoystick.Direction.normalized * (Time.deltaTime * 2);
+            transform.localPosition += (Vector3)MainManager.Instance.PlayerJoystick.Direction * (Time.deltaTime * 3);
         }
     }
 
