@@ -25,6 +25,9 @@ public class MainManager : MonoBehaviour
     }
 
     internal Camera Camera { get; private set; }
+    
+    internal static bool trajectoryEnabled = false;
+    internal static int trajectoryLength = 50;
 
     void Awake()
     {
@@ -71,5 +74,20 @@ public class MainManager : MonoBehaviour
     public bool IsGameRunning()
     {
         return game != null;
+    }
+    
+    public static void ToggleTrajectory()
+    {
+        trajectoryEnabled = !trajectoryEnabled;
+    }
+    
+    public static void IncreaseTrajectoryLength()
+    {
+        trajectoryLength += 10;
+    }
+    
+    public static void DecreaseTrajectoryLength()
+    {
+        trajectoryLength -= Math.Max(trajectoryLength - 10, 10);
     }
 }

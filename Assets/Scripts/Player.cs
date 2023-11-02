@@ -205,6 +205,6 @@ public class Player : MonoBehaviour
 
     void Die()
     {
-        PlayerController.Instance.Die();
+        PlayerController.Die();
     }
 }

@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         _dragging = false;
     }
     
-    internal void Die()
+    internal static void Die()
     {
         GameManager.Instance.GameOver();
     }

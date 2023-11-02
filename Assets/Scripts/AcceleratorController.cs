@@ -6,13 +6,16 @@ public class AcceleratorController : MonoBehaviour
     float _maxCentripetalAcceleration = 100f;
 
     [SerializeField]
-    float _minCentripetalAcceleration;
+    float _minCentripetalAcceleration = -50;
 
     [SerializeField]
-    float _initialCentripetalAcceleration = 20f;
+    float _initialCentripetalAcceleration = 25;
 
     [SerializeField]
     LineRenderer _accelerationLine;
+    
+    [SerializeField]
+    LineRenderer _trajectoryLine;
     
     float centripetalAcceleration;
 
@@ -24,15 +27,23 @@ public class AcceleratorController : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.State != GameState.Playing)
+        {
+            _accelerationLine.enabled = false;
+            _trajectoryLine.enabled = false;
             return;
+        }
         
         if (!MainManager.Instance.AcceleratorJoystick.IsOnTouch)
         {
             _accelerationLine.enabled = false;
+            _trajectoryLine.enabled = false;
             return;
         }
 
         _accelerationLine.enabled = true;
+        
+        if (MainManager.trajectoryEnabled)
+            _trajectoryLine.enabled = true;
 
         float joystickPercent = (MainManager.Instance.AcceleratorJoystick.Vertical + MainManager.Instance.AcceleratorJoystick.HandleRange) / (2 * MainManager.Instance.AcceleratorJoystick.HandleRange);
         centripetalAcceleration = joystickPercent < 0.5f
@@ -40,6 +51,9 @@ public class AcceleratorController : MonoBehaviour
             : Mathf.Lerp(_initialCentripetalAcceleration, _maxCentripetalAcceleration, (joystickPercent - 0.5f) * 2);
         
         UpdateAcceroLine();
+        
+        if (MainManager.trajectoryEnabled)
+            UpdateTrajectoryLine();
     }
 
     void FixedUpdate()
@@ -54,9 +68,9 @@ public class AcceleratorController : MonoBehaviour
 
         var delta = transform.position - PlayerController.Instance.Player.transform.position;
         var direction = delta.normalized;
-        var force = direction * (centripetalAcceleration * GameManager.Instance.ScaleFactor());
+        var acceleration = direction * (centripetalAcceleration * GameManager.Instance.ScaleFactor());
 
-        PlayerController.Instance.Player.rb.AddForce(force, ForceMode.Acceleration);
+        PlayerController.Instance.Player.rb.AddForce(acceleration, ForceMode.Acceleration);
     }
 
     void UpdateAcceroLine()
@@ -72,5 +86,33 @@ public class AcceleratorController : MonoBehaviour
         };
         _accelerationLine.startColor = color;
         _accelerationLine.endColor = color;
+    }
+
+    void UpdateTrajectoryLine()
+    {
+        var positions = new Vector3[MainManager.trajectoryLength];
+        positions[0] = PlayerController.Instance.Player.transform.position;
+        
+        var velocity = PlayerController.Instance.Player.rb.velocity;
+        int i;
+        
+        for (i = 1; i < positions.Length; i++)
+        {
+            var delta = transform.position - positions[i - 1];
+            var direction = delta.normalized;
+            var acceleration = direction * (centripetalAcceleration * GameManager.Instance.ScaleFactor());
+            var position = positions[i - 1] + velocity * Time.fixedDeltaTime + acceleration * (Time.fixedDeltaTime * Time.fixedDeltaTime) / 2;
+            
+            if (!GameManager.Instance.GameArea.bounds.Contains(position))
+            {
+                break;
+            }
+            
+            positions[i] = position;
+            velocity += acceleration * Time.fixedDeltaTime;
+        }
+        
+        _trajectoryLine.positionCount = i;
+        _trajectoryLine.SetPositions(positions);
     }
 }

@@ -21,6 +21,13 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] List<GameObject> _activeOnGameOver;
     [SerializeField] List<GameObject> _deactiveOnGameOver;
+    
+    [SerializeField] BoxCollider _gameArea;
+
+    public BoxCollider GameArea
+    {
+        get => _gameArea;
+    }
 
     void Awake()
     {
