@@ -11,6 +11,7 @@ TagManager:
   - PointItem
   - PowerItem
   - Game
+  - RecordingCamera
   layers:
   - Default
   - TransparentFX

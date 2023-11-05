@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc187cb97f2565a4280217065f62741b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 1
+  score: 2
   _effectPrefab: {fileID: 0}
 --- !u!1001 &7846788516313527282
 PrefabInstance:
